@@ -1,5 +1,6 @@
 <video controls autoplay muted class="w-full rounded-lg">
-    <source src="bumper.mp4" type="video/mp4" autoplay>
+    <source src="bumper.mp4" type="video/mp4">
+    <source src="video-pembuka.webm" type="video/webm">
     Video tidak dapat diputar di browser ini.
 </video><!DOCTYPE html>
 <html lang="id">
@@ -126,58 +127,56 @@
             <div class="bg-black rounded-xl shadow-2xl overflow-hidden mb-8">
                 <!-- Video Container -->
                 <div class="relative bg-gray-900 aspect-video">
-                    <div class="absolute inset-0 flex items-center justify-center">
+                    <!-- Demo Video (replace with your actual video) -->
+                    <video id="openingVideo" class="w-full h-full object-cover rounded-lg" autoplay muted onended="autoNavigateToLanding()">
+                        <!-- Replace these with your actual video files -->
+                        <source src="opening-video.mp4" type="video/mp4">
+                        <source src="opening-video.webm" type="video/webm">
+                        
+                        <!-- Fallback content if video fails to load -->
+                        <div class="absolute inset-0 flex items-center justify-center bg-gray-800">
+                            <div class="text-center text-white">
+                                <div class="text-6xl mb-4">🎬</div>
+                                <h2 class="text-2xl font-bold mb-4">Video Pembuka</h2>
+                                <p class="text-gray-300 mb-6">Video sedang dimuat...</p>
+                                <div class="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                                <p class="text-sm text-gray-400">Jika video tidak muncul, akan otomatis lanjut ke halaman berikutnya</p>
+                            </div>
+                        </div>
+                    </video>
+                    
+                    <!-- Loading overlay -->
+                    <div id="videoLoading" class="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90">
                         <div class="text-center text-white">
                             <div class="text-6xl mb-4">🎬</div>
-                            <h2 class="text-2xl font-bold mb-4">Video Pembuka</h2>
-                            <p class="text-gray-300 mb-6">Tempat untuk video pengantar aplikasi</p>
-                            
-                            <!-- Video placeholder - replace with actual video -->
-                            <div class="bg-gray-800 rounded-lg p-8 mb-6 border-2 border-dashed border-gray-600">
-                                <div class="text-4xl mb-3">📹</div>
-                                <p class="text-gray-400 mb-4">Video akan ditempatkan di sini</p>
-                                <div class="text-sm text-gray-500">
-                                    Format yang didukung: MP4, WebM, OGV<br>
-                                    Resolusi yang disarankan: 1920x1080
-                                </div>
-                            </div>
-                            
-                            <!-- Video Controls Placeholder -->
-                            <div class="flex justify-center items-center space-x-4 mb-6">
-                                <button class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full transition duration-200">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M8 5v14l11-7z"/>
-                                    </svg>
-                                </button>
-                                <div class="bg-gray-700 rounded-full h-2 flex-1 max-w-md">
-                                    <div class="bg-blue-500 h-2 rounded-full w-0"></div>
-                                </div>
-                                <span class="text-sm text-gray-400">0:00 / 0:00</span>
-                            </div>
+                            <h2 class="text-2xl font-bold mb-4">Memuat Video Pembuka</h2>
+                            <div class="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                            <p class="text-gray-300">Mohon tunggu sebentar...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Skip button (appears after 3 seconds) -->
+                    <div id="skipButton" class="absolute top-4 right-4 hidden">
+                        <button onclick="skipVideo()" class="bg-black bg-opacity-50 hover:bg-opacity-70 text-white px-4 py-2 rounded-lg text-sm font-semibold transition duration-200">
+                            ⏭️ Lewati
+                        </button>
+                    </div>
+                    
+                    <!-- Progress bar -->
+                    <div class="absolute bottom-0 left-0 right-0 bg-gray-800 bg-opacity-50 p-2">
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div id="videoProgress" class="bg-blue-500 h-1 rounded-full transition-all duration-300" style="width: 0%"></div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Navigation Buttons -->
-            <div class="flex justify-center space-x-4">
-                <button onclick="skipVideo()" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
-                    ⏭️ Lewati Video
-                </button>
-                <button onclick="goToLanding()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
-                    ▶️ Lanjutkan
-                </button>
-            </div>
-            
-            <!-- Instructions -->
-            <div class="mt-8 bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6">
-                <h3 class="text-white font-semibold mb-3">💡 Petunjuk Penambahan Video:</h3>
-                <div class="text-left text-gray-200 space-y-2 text-sm">
-                    <div>• Ganti placeholder dengan elemen &lt;video&gt; HTML5</div>
-                    <div>• Tambahkan atribut controls, autoplay, atau loop sesuai kebutuhan</div>
-                    <div>• Pastikan video sudah dioptimasi untuk web</div>
-                    <div>• Sediakan subtitle jika diperlukan</div>
-                </div>
+            <!-- Auto-navigation info -->
+            <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-4">
+                <p class="text-white text-sm">
+                    <span class="inline-block w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+                    Video akan otomatis lanjut ke halaman berikutnya setelah selesai
+                </p>
             </div>
         </div>
     </div>
@@ -1679,9 +1678,109 @@
             loadQuestion();
         }
 
+        // Video functions
+        function autoNavigateToLanding() {
+            // Automatically go to landing page when video ends
+            setTimeout(() => {
+                goToLanding();
+            }, 1000); // Small delay for smooth transition
+        }
+
+        function initVideoPage() {
+            const video = document.getElementById('openingVideo');
+            const loading = document.getElementById('videoLoading');
+            const skipButton = document.getElementById('skipButton');
+            const progressBar = document.getElementById('videoProgress');
+            
+            // Show skip button after 3 seconds
+            setTimeout(() => {
+                skipButton.classList.remove('hidden');
+            }, 3000);
+            
+            // Handle video loading
+            video.addEventListener('loadstart', function() {
+                loading.classList.remove('hidden');
+            });
+            
+            video.addEventListener('canplay', function() {
+                loading.classList.add('hidden');
+            });
+            
+            // Update progress bar
+            video.addEventListener('timeupdate', function() {
+                if (video.duration) {
+                    const progress = (video.currentTime / video.duration) * 100;
+                    progressBar.style.width = progress + '%';
+                }
+            });
+            
+            // Handle video load error - auto navigate after 5 seconds
+            video.addEventListener('error', function() {
+                loading.innerHTML = `
+                    <div class="text-center text-white">
+                        <div class="text-6xl mb-4">⚠️</div>
+                        <h2 class="text-2xl font-bold mb-4">Video Tidak Dapat Dimuat</h2>
+                        <p class="text-gray-300 mb-4">Akan otomatis lanjut ke halaman berikutnya...</p>
+                        <div class="text-sm text-gray-400">
+                            <span id="countdown">5</span> detik
+                        </div>
+                    </div>
+                `;
+                
+                let countdown = 5;
+                const countdownInterval = setInterval(() => {
+                    countdown--;
+                    const countdownElement = document.getElementById('countdown');
+                    if (countdownElement) {
+                        countdownElement.textContent = countdown;
+                    }
+                    
+                    if (countdown <= 0) {
+                        clearInterval(countdownInterval);
+                        goToLanding();
+                    }
+                }, 1000);
+            });
+            
+            // Try to play video (some browsers require user interaction)
+            video.play().catch(function(error) {
+                console.log('Autoplay prevented:', error);
+                // Show play button if autoplay fails
+                loading.innerHTML = `
+                    <div class="text-center text-white">
+                        <div class="text-6xl mb-4">🎬</div>
+                        <h2 class="text-2xl font-bold mb-4">Video Pembuka</h2>
+                        <p class="text-gray-300 mb-6">Klik tombol play untuk memulai</p>
+                        <button onclick="playVideo()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition duration-200">
+                            ▶️ Putar Video
+                        </button>
+                        <div class="mt-4">
+                            <button onclick="skipVideo()" class="text-gray-300 hover:text-white text-sm underline">
+                                Lewati Video →
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function playVideo() {
+            const video = document.getElementById('openingVideo');
+            const loading = document.getElementById('videoLoading');
+            
+            video.play().then(() => {
+                loading.classList.add('hidden');
+            }).catch((error) => {
+                console.log('Play failed:', error);
+                // If still can't play, just skip to landing
+                goToLanding();
+            });
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             loadQuestion();
+            initVideoPage();
         });
 
         // Navigation functions
@@ -1735,5 +1834,5 @@
     </script>
     
     </div> <!-- End Main App -->
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9841fcf137576be5',t:'MTc1ODcxMzgyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'984213d651eda084',t:'MTc1ODcxNDc2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
