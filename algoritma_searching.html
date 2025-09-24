@@ -124,7 +124,7 @@
                 <!-- Video Container -->
                 <div class="relative bg-gray-900 aspect-video">
                     <!-- Bumper Video -->
-                    <video id="openingVideo" class="w-full h-full object-cover rounded-lg" autoplay muted onended="autoNavigateToLanding()">
+                    <video id="openingVideo" class="w-full h-full object-cover rounded-lg" autoplay muted onended="autoNavigateToEmbedPage()">
                         <source src="bumper.mp4" type="video/mp4">
                         <source src="bumper.webm" type="video/webm">
                         
@@ -172,168 +172,87 @@
             <div class="text-center mb-8">
                 <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto">
                     <div class="text-5xl mb-4">📺</div>
-                    <h1 class="text-3xl font-bold text-gray-800 mb-4">Konten Multimedia</h1>
-                    <p class="text-gray-600 text-lg">Pelajari lebih dalam tentang algoritma searching melalui berbagai media pembelajaran</p>
+                    <h1 class="text-3xl font-bold text-gray-800 mb-4">Video Pembelajaran</h1>
+                    <p class="text-gray-600 text-lg">Tonton video pembelajaran tentang algoritma searching untuk pengiriman barang</p>
                 </div>
             </div>
 
-            <!-- Embed Content Grid -->
-            <div class="grid lg:grid-cols-2 gap-8 mb-8">
-                <!-- Video Embed Section -->
+            <!-- Single Video Embed Section -->
+            <div class="max-w-4xl mx-auto mb-8">
                 <div class="bg-white rounded-xl shadow-lg p-6">
-                    <div class="flex items-center mb-4">
+                    <div class="flex items-center mb-6">
                         <div class="bg-red-500 p-3 rounded-lg mr-3">
                             <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                             </svg>
                         </div>
-                        <h2 class="text-xl font-bold text-gray-800">Video Pembelajaran</h2>
+                        <h2 class="text-2xl font-bold text-gray-800">Algoritma Searching untuk Rute Pengiriman</h2>
                     </div>
                     
                     <!-- Video Embed Container -->
-                    <div class="bg-gray-100 rounded-lg p-6 mb-4 min-h-[300px] flex items-center justify-center">
+                    <div class="bg-gray-100 rounded-lg mb-6 aspect-video flex items-center justify-center">
                         <div class="text-center">
-                            <div class="text-4xl mb-3">🎥</div>
-                            <h3 class="text-lg font-semibold text-gray-700 mb-2">Embed Video di Sini</h3>
-                            <p class="text-gray-500 text-sm mb-4">Tempat untuk menyematkan video YouTube, Vimeo, atau platform lainnya</p>
-                            <div class="bg-blue-50 p-4 rounded-lg text-left">
+                            <div class="text-6xl mb-4">🎥</div>
+                            <h3 class="text-xl font-semibold text-gray-700 mb-3">Embed Video di Sini</h3>
+                            <p class="text-gray-500 mb-4">Tempat untuk menyematkan video pembelajaran dari YouTube, Vimeo, atau platform lainnya</p>
+                            <div class="bg-blue-50 p-4 rounded-lg text-left max-w-md mx-auto">
                                 <h4 class="font-semibold text-blue-800 mb-2">Contoh Embed Code:</h4>
                                 <code class="text-xs text-blue-700 bg-blue-100 p-2 rounded block">
                                     &lt;iframe src="https://www.youtube.com/embed/VIDEO_ID" 
-                                    width="100%" height="315" frameborder="0"&gt;&lt;/iframe&gt;
+                                    width="100%" height="100%" frameborder="0"&gt;&lt;/iframe&gt;
                                 </code>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="bg-blue-50 p-4 rounded-lg">
-                        <h4 class="font-semibold text-blue-800 mb-2">💡 Saran Konten Video:</h4>
-                        <ul class="text-blue-700 text-sm space-y-1">
-                            <li>• Tutorial implementasi BFS dan DFS</li>
-                            <li>• Studi kasus pengiriman barang real-world</li>
-                            <li>• Perbandingan performa algoritma</li>
-                            <li>• Demo aplikasi dalam industri logistik</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Interactive Embed Section -->
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-green-500 p-3 rounded-lg mr-3">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                            </svg>
-                        </div>
-                        <h2 class="text-xl font-bold text-gray-800">Konten Interaktif</h2>
-                    </div>
-                    
-                    <!-- Interactive Content Container -->
-                    <div class="bg-gray-100 rounded-lg p-6 mb-4 min-h-[300px] flex items-center justify-center">
-                        <div class="text-center">
-                            <div class="text-4xl mb-3">🎮</div>
-                            <h3 class="text-lg font-semibold text-gray-700 mb-2">Embed Interaktif</h3>
-                            <p class="text-gray-500 text-sm mb-4">Tempat untuk menyematkan konten interaktif seperti H5P, Genially, atau tools lainnya</p>
-                            <div class="bg-green-50 p-4 rounded-lg text-left">
-                                <h4 class="font-semibold text-green-800 mb-2">Platform yang Didukung:</h4>
-                                <div class="text-green-700 text-sm space-y-1">
-                                    <div>• H5P Interactive Content</div>
-                                    <div>• Genially Presentations</div>
-                                    <div>• Mentimeter Polls</div>
-                                    <div>• Padlet Collaboration</div>
-                                    <div>• CodePen Demos</div>
-                                </div>
-                            </div>
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 mb-3">📚 Materi yang Dibahas dalam Video:</h4>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <ul class="text-blue-700 space-y-2">
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                                    Pengenalan algoritma BFS dan DFS
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                                    Implementasi untuk rute pengiriman
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                                    Perbandingan efisiensi algoritma
+                                </li>
+                            </ul>
+                            <ul class="text-blue-700 space-y-2">
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                                    Studi kasus industri logistik
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                                    Optimasi rute pengiriman barang
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                                    Demo aplikasi praktis
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    
-                    <div class="bg-green-50 p-4 rounded-lg">
-                        <h4 class="font-semibold text-green-800 mb-2">🎯 Ide Konten Interaktif:</h4>
-                        <ul class="text-green-700 text-sm space-y-1">
-                            <li>• Quiz interaktif tentang algoritma</li>
-                            <li>• Simulasi graf yang dapat dimanipulasi</li>
-                            <li>• Drag & drop untuk menyusun algoritma</li>
-                            <li>• Polling real-time untuk diskusi</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Additional Embed Sections -->
-            <div class="grid lg:grid-cols-3 gap-6 mb-8">
-                <!-- Document Embed -->
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-orange-500 p-2 rounded-lg mr-3">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-800">Dokumen</h3>
-                    </div>
-                    <div class="bg-gray-100 rounded-lg p-4 h-32 flex items-center justify-center mb-3">
-                        <div class="text-center">
-                            <div class="text-2xl mb-2">📄</div>
-                            <p class="text-gray-600 text-sm">PDF, Google Docs, atau SlideShare</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-500 text-xs">Embed materi pembelajaran dalam format dokumen</p>
-                </div>
-
-                <!-- Audio Embed -->
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-purple-500 p-2 rounded-lg mr-3">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M5 7h4l1 1v8l-1 1H5a2 2 0 01-2-2V9a2 2 0 012-2z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-800">Audio</h3>
-                    </div>
-                    <div class="bg-gray-100 rounded-lg p-4 h-32 flex items-center justify-center mb-3">
-                        <div class="text-center">
-                            <div class="text-2xl mb-2">🎵</div>
-                            <p class="text-gray-600 text-sm">Podcast atau Audio Pembelajaran</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-500 text-xs">Embed konten audio untuk pembelajaran auditori</p>
-                </div>
-
-                <!-- Social Media Embed -->
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-blue-500 p-2 rounded-lg mr-3">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-800">Social Media</h3>
-                    </div>
-                    <div class="bg-gray-100 rounded-lg p-4 h-32 flex items-center justify-center mb-3">
-                        <div class="text-center">
-                            <div class="text-2xl mb-2">💬</div>
-                            <p class="text-gray-600 text-sm">Twitter, Instagram, atau LinkedIn</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-500 text-xs">Embed diskusi atau konten dari media sosial</p>
                 </div>
             </div>
 
             <!-- Navigation -->
             <div class="text-center">
-                <div class="bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Siap Melanjutkan Pembelajaran?</h3>
-                    <p class="text-gray-600 mb-6">Setelah mempelajari konten multimedia, mari lanjutkan ke aplikasi pembelajaran interaktif</p>
+                <div class="bg-white rounded-xl shadow-lg p-8 max-w-2xl mx-auto">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Selesai Menonton Video?</h3>
+                    <p class="text-gray-600 mb-6">Lanjutkan ke aplikasi pembelajaran interaktif untuk mempraktikkan algoritma searching</p>
                     
                     <div class="flex justify-center space-x-4">
                         <button onclick="goBackToVideo()" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
-                            ← Kembali ke Video
+                            ← Kembali ke Video Pembuka
                         </button>
-                        <button onclick="goToLanding()" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
-                            Lanjut ke Landing →
-                        </button>
-                        <button onclick="enterApp()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg transition duration-200 shadow-lg hover:shadow-xl">
-                            🚀 Langsung ke Aplikasi
+                        <button onclick="enterApp()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-lg transition duration-200 shadow-lg hover:shadow-xl text-lg">
+                            🚀 Lanjut ke Aplikasi Pembelajaran
                         </button>
                     </div>
                 </div>
@@ -1839,7 +1758,7 @@
         }
 
         // Video functions
-        function autoNavigateToLanding() {
+        function autoNavigateToEmbedPage() {
             // Automatically go to embed page when video ends
             setTimeout(() => {
                 goToEmbedPage();
@@ -1886,7 +1805,7 @@
                     
                     if (countdown <= 0) {
                         clearInterval(countdownInterval);
-                        goToLanding();
+                        goToEmbedPage();
                     }
                 }, 1000);
             });
@@ -1917,8 +1836,8 @@
                 loading.classList.add('hidden');
             }).catch((error) => {
                 console.log('Play failed:', error);
-                // If still can't play, just skip to landing
-                goToLanding();
+                // If still can't play, just skip to embed page
+                goToEmbedPage();
             });
         }
 
@@ -1939,11 +1858,11 @@
         function goHome() {
             playSound('click');
             
-            // Return to video page (the very first page)
+            // Return to embed page (the second page)
             document.getElementById('mainApp').classList.add('hidden');
             document.getElementById('landingPage').classList.add('hidden');
-            document.getElementById('embedPage').classList.add('hidden');
-            document.getElementById('videoPage').classList.remove('hidden');
+            document.getElementById('videoPage').classList.add('hidden');
+            document.getElementById('embedPage').classList.remove('hidden');
             
             // Reset all sections to default state
             resetAllSections();
@@ -1963,13 +1882,7 @@
             document.getElementById('embedPage').classList.remove('hidden');
         }
 
-        function goToLanding() {
-            playSound('click');
-            document.getElementById('videoPage').classList.add('hidden');
-            document.getElementById('embedPage').classList.add('hidden');
-            document.getElementById('mainApp').classList.add('hidden');
-            document.getElementById('landingPage').classList.remove('hidden');
-        }
+
 
         function goBackToVideo() {
             playSound('click');
@@ -1999,5 +1912,5 @@
     </script>
     
     </div> <!-- End Main App -->
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98426f1be2dd447c',t:'MTc1ODcxODUwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9842813cc1d6fd90',t:'MTc1ODcxOTI0Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
