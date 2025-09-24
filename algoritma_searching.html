@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<video controls autoplay muted class="w-full rounded-lg">
+    <source src="bumper.mp4" type="video/mp4">
+    Video tidak dapat diputar di browser ini.
+</video><!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -117,8 +120,70 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Video Opening Page -->
+    <div id="videoPage" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900 to-purple-900">
+        <div class="text-center max-w-4xl mx-auto px-6">
+            <div class="bg-black rounded-xl shadow-2xl overflow-hidden mb-8">
+                <!-- Video Container -->
+                <div class="relative bg-gray-900 aspect-video">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <div class="text-6xl mb-4">🎬</div>
+                            <h2 class="text-2xl font-bold mb-4">Video Pembuka</h2>
+                            <p class="text-gray-300 mb-6">Tempat untuk video pengantar aplikasi</p>
+                            
+                            <!-- Video placeholder - replace with actual video -->
+                            <div class="bg-gray-800 rounded-lg p-8 mb-6 border-2 border-dashed border-gray-600">
+                                <div class="text-4xl mb-3">📹</div>
+                                <p class="text-gray-400 mb-4">Video akan ditempatkan di sini</p>
+                                <div class="text-sm text-gray-500">
+                                    Format yang didukung: MP4, WebM, OGV<br>
+                                    Resolusi yang disarankan: 1920x1080
+                                </div>
+                            </div>
+                            
+                            <!-- Video Controls Placeholder -->
+                            <div class="flex justify-center items-center space-x-4 mb-6">
+                                <button class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full transition duration-200">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </button>
+                                <div class="bg-gray-700 rounded-full h-2 flex-1 max-w-md">
+                                    <div class="bg-blue-500 h-2 rounded-full w-0"></div>
+                                </div>
+                                <span class="text-sm text-gray-400">0:00 / 0:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="flex justify-center space-x-4">
+                <button onclick="skipVideo()" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
+                    ⏭️ Lewati Video
+                </button>
+                <button onclick="goToLanding()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
+                    ▶️ Lanjutkan
+                </button>
+            </div>
+            
+            <!-- Instructions -->
+            <div class="mt-8 bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6">
+                <h3 class="text-white font-semibold mb-3">💡 Petunjuk Penambahan Video:</h3>
+                <div class="text-left text-gray-200 space-y-2 text-sm">
+                    <div>• Ganti placeholder dengan elemen &lt;video&gt; HTML5</div>
+                    <div>• Tambahkan atribut controls, autoplay, atau loop sesuai kebutuhan</div>
+                    <div>• Pastikan video sudah dioptimasi untuk web</div>
+                    <div>• Sediakan subtitle jika diperlukan</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Landing Page -->
-    <div id="landingPage" class="min-h-screen flex items-center justify-center">
+    <div id="landingPage" class="min-h-screen flex items-center justify-center hidden">
         <div class="text-center">
             <div class="bg-white rounded-xl shadow-lg p-12 max-w-2xl mx-auto">
                 <div class="text-6xl mb-6">🚀</div>
@@ -1629,8 +1694,25 @@
         function goHome() {
             playSound('click');
             
+            // Return to video page (the very first page)
+            document.getElementById('mainApp').classList.add('hidden');
+            document.getElementById('landingPage').classList.add('hidden');
+            document.getElementById('videoPage').classList.remove('hidden');
+            
             // Reset all sections to default state
             resetAllSections();
+        }
+
+        // Video page navigation functions
+        function skipVideo() {
+            playSound('click');
+            goToLanding();
+        }
+
+        function goToLanding() {
+            playSound('click');
+            document.getElementById('videoPage').classList.add('hidden');
+            document.getElementById('landingPage').classList.remove('hidden');
         }
 
         // Reset all sections to default state
@@ -1653,5 +1735,5 @@
     </script>
     
     </div> <!-- End Main App -->
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9841f3e691a69fa9',t:'MTc1ODcxMzQ1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9841fcf137576be5',t:'MTc1ODcxMzgyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
