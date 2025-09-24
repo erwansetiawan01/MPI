@@ -9,6 +9,166 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
         
+        .landing-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        
+        .landing-page.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .sketchfab-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+        }
+        
+        .sketchfab-embed-wrapper {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .sketchfab-embed-wrapper iframe {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .landing-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            max-width: 600px;
+            padding: 2rem;
+        }
+        
+        .landing-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: slideInDown 1s ease-out;
+        }
+        
+        .landing-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+        
+        .landing-description {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            opacity: 0.8;
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+        
+        .start-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            animation: bounceIn 1s ease-out 0.9s both;
+        }
+        
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
+        }
+        
+        .floating-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-20px) rotate(120deg);
+            }
+            66% {
+                transform: translateY(10px) rotate(240deg);
+            }
+        }
+        
         .fade-in {
             animation: fadeIn 0.5s ease-in;
         }
@@ -44,9 +204,112 @@
             0%, 100% { fill: #3B82F6; }
             50% { fill: #EF4444; }
         }
+
+        .race-track {
+            background: linear-gradient(90deg, #f0f9ff 0%, #e0f2fe 50%, #f0f9ff 100%);
+            border: 2px solid #0ea5e9;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .algorithm-runner {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: left 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .bfs-runner {
+            background: linear-gradient(45deg, #10b981, #059669);
+            top: 25%;
+        }
+
+        .dfs-runner {
+            background: linear-gradient(45deg, #8b5cf6, #7c3aed);
+            top: 65%;
+        }
+
+        .finish-line {
+            position: absolute;
+            right: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: repeating-linear-gradient(
+                0deg,
+                #000 0px,
+                #000 10px,
+                #fff 10px,
+                #fff 20px
+            );
+        }
+
+        .race-progress {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .bfs-progress { background: #10b981; }
+        .dfs-progress { background: #8b5cf6; }
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Landing Page -->
+    <div id="landingPage" class="landing-page">
+        <!-- 3D City Background -->
+        <div class="sketchfab-container">
+            <div class="sketchfab-embed-wrapper">
+                <iframe title="Low Poly City" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/c5f3bb50fed947e8891b236bc85b4f7d/embed">
+                </iframe>
+            </div>
+        </div>
+        
+        <!-- Floating Icons -->
+        <div class="floating-icons">
+            <div class="floating-icon" style="top: 10%; left: 10%; animation-delay: 0s;">🚚</div>
+            <div class="floating-icon" style="top: 20%; right: 15%; animation-delay: 1s;">📦</div>
+            <div class="floating-icon" style="bottom: 30%; left: 20%; animation-delay: 2s;">🏪</div>
+            <div class="floating-icon" style="bottom: 20%; right: 10%; animation-delay: 3s;">🗺️</div>
+            <div class="floating-icon" style="top: 50%; left: 5%; animation-delay: 4s;">⚡</div>
+            <div class="floating-icon" style="top: 60%; right: 5%; animation-delay: 5s;">🎯</div>
+        </div>
+        
+        <!-- Landing Content -->
+        <div class="landing-content">
+            <h1 class="landing-title">🚀 Algoritma Searching</h1>
+            <p class="landing-subtitle">Pencarian Rute Pengiriman Barang</p>
+            <p class="landing-description">
+                Jelajahi dunia algoritma pencarian melalui simulasi interaktif pengiriman barang di kota 3D. 
+                Pelajari BFS dan DFS dengan cara yang menyenangkan dan mudah dipahami!
+            </p>
+            <button class="start-button" onclick="enterApplication()">
+                ✨ Mulai Belajar
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Application (Hidden Initially) -->
+    <div id="mainApp" style="opacity: 0; visibility: hidden; transition: opacity 0.8s ease, visibility 0.8s ease;">
+    
     <!-- Header -->
     <header class="bg-white shadow-lg border-b-4 border-blue-500">
         <div class="container mx-auto px-6 py-4">
@@ -314,24 +577,230 @@
         <section id="latihan" class="section-content hidden">
             <div class="bg-white rounded-xl shadow-lg p-8">
                 <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
-                    <span class="bg-orange-500 text-white p-2 rounded-lg mr-3">✏️</span>
-                    Latihan Soal
+                    <span class="bg-orange-500 text-white p-2 rounded-lg mr-3">🎮</span>
+                    Game: Route Master Challenge
                 </h2>
 
-                <div id="quizContainer" class="space-y-6">
-                    <!-- Quiz questions will be loaded here -->
+                <!-- Game Selection -->
+                <div id="gameSelection" class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border-2 border-blue-200 hover:border-blue-400 cursor-pointer transition duration-200" onclick="playSound('click'); startGame('algorace')">
+                        <div class="text-center">
+                            <div class="text-4xl mb-3">🏁</div>
+                            <h3 class="text-lg font-bold text-blue-800 mb-2">Algorithm Race</h3>
+                            <p class="text-blue-600 text-sm">Balapan algoritma BFS vs DFS secara real-time</p>
+                            <div class="mt-3 bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                                Level: Mudah
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border-2 border-green-200 hover:border-green-400 cursor-pointer transition duration-200" onclick="playSound('click'); startGame('speedrace')">
+                        <div class="text-center">
+                            <div class="text-4xl mb-3">⚡</div>
+                            <h3 class="text-lg font-bold text-green-800 mb-2">Speed Race</h3>
+                            <p class="text-green-600 text-sm">Lomba kecepatan algoritma searching</p>
+                            <div class="mt-3 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                                Level: Sedang
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg border-2 border-purple-200 hover:border-purple-400 cursor-pointer transition duration-200" onclick="playSound('click'); startGame('puzzle')">
+                        <div class="text-center">
+                            <div class="text-4xl mb-3">🧩</div>
+                            <h3 class="text-lg font-bold text-purple-800 mb-2">Algorithm Puzzle</h3>
+                            <p class="text-purple-600 text-sm">Susun langkah algoritma yang benar</p>
+                            <div class="mt-3 bg-purple-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                                Level: Sulit
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="flex justify-between mt-8">
-                    <button onclick="previousQuestion()" id="prevBtn" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-200 disabled:opacity-50" disabled>
-                        ← Sebelumnya
-                    </button>
-                    <span id="questionCounter" class="flex items-center text-gray-600 font-medium">
-                        Soal 1 dari 5
-                    </span>
-                    <button onclick="nextQuestion()" id="nextBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">
-                        Selanjutnya →
-                    </button>
+                <!-- Game Area -->
+                <div id="gameArea" class="hidden">
+                    <!-- Algorithm Race Game -->
+                    <div id="algoraceGame" class="game-content hidden">
+                        <div class="bg-blue-50 p-6 rounded-lg mb-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-bold text-blue-800">🏁 Algorithm Race Challenge</h3>
+                                <div class="flex items-center space-x-4">
+                                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                        Round: <span id="raceRound">1</span>/5
+                                    </span>
+                                    <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                        Skor: <span id="raceScore">0</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-blue-700 mb-2">Tebak algoritma mana yang akan sampai tujuan lebih dulu! Amati pola pencarian mereka.</p>
+                            <div class="bg-blue-100 p-3 rounded-lg mb-4">
+                                <h5 class="font-semibold text-blue-800 mb-2">💡 Tips Analisis:</h5>
+                                <ul class="text-blue-700 text-sm space-y-1">
+                                    <li>• <strong>BFS:</strong> Cari level berapa target ditemukan</li>
+                                    <li>• <strong>DFS:</strong> Hitung total langkah hingga target</li>
+                                    <li>• <strong>Bandingkan:</strong> Algoritma dengan langkah lebih sedikit menang!</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-lg border mb-4">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h4 class="font-semibold text-gray-700">Rute: <span id="raceRoute" class="text-blue-600">A → E</span></h4>
+                                    <div class="text-sm text-gray-600">
+                                        <span class="inline-block w-3 h-3 bg-green-500 rounded-full mr-1"></span> BFS
+                                        <span class="inline-block w-3 h-3 bg-purple-500 rounded-full mr-1 ml-3"></span> DFS
+                                    </div>
+                                </div>
+                                
+                                <!-- Search Pattern Visualization -->
+                                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                                        <h5 class="font-semibold text-green-800 mb-2">🟢 Pola BFS (Level by Level)</h5>
+                                        <div id="bfsPattern" class="text-sm text-green-700">
+                                            <!-- BFS pattern will be shown here -->
+                                        </div>
+                                        <div class="mt-2 text-xs text-green-600">
+                                            Jarak: <span id="bfsDistance" class="font-bold">-</span> langkah
+                                        </div>
+                                    </div>
+                                    <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                                        <h5 class="font-semibold text-purple-800 mb-2">🟣 Pola DFS (Depth First)</h5>
+                                        <div id="dfsPattern" class="text-sm text-purple-700">
+                                            <!-- DFS pattern will be shown here -->
+                                        </div>
+                                        <div class="mt-2 text-xs text-purple-600">
+                                            Jarak: <span id="dfsDistance" class="font-bold">-</span> langkah
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Race Track -->
+                                <div class="race-track h-24 mb-4 relative">
+                                    <div class="finish-line"></div>
+                                    <div class="algorithm-runner bfs-runner" id="bfsRunner">BFS</div>
+                                    <div class="algorithm-runner dfs-runner" id="dfsRunner">DFS</div>
+                                </div>
+                                
+                                <!-- Progress Bars -->
+                                <div class="space-y-2 mb-4">
+                                    <div class="flex items-center">
+                                        <span class="w-12 text-sm font-semibold text-green-600">BFS:</span>
+                                        <div class="flex-1 race-progress">
+                                            <div class="progress-bar bfs-progress" id="bfsProgress" style="width: 0%"></div>
+                                        </div>
+                                        <span class="w-12 text-right text-sm" id="bfsSteps">0</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span class="w-12 text-sm font-semibold text-purple-600">DFS:</span>
+                                        <div class="flex-1 race-progress">
+                                            <div class="progress-bar dfs-progress" id="dfsProgress" style="width: 0%"></div>
+                                        </div>
+                                        <span class="w-12 text-right text-sm" id="dfsSteps">0</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Prediction Buttons -->
+                                <div id="predictionButtons" class="flex justify-center space-x-4">
+                                    <button onclick="makePrediction('bfs')" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition duration-200">
+                                        🟢 BFS Menang
+                                    </button>
+                                    <button onclick="makePrediction('dfs')" class="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold transition duration-200">
+                                        🟣 DFS Menang
+                                    </button>
+                                    <button onclick="makePrediction('tie')" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition duration-200">
+                                        ⚪ Seri
+                                    </button>
+                                </div>
+                                
+                                <div class="text-center mt-4">
+                                    <button onclick="startRace()" id="startRaceBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold text-lg">
+                                        🚀 Mulai Balapan!
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div id="raceResult" class="hidden mt-4 p-4 rounded-lg"></div>
+                        </div>
+                    </div>
+
+                    <!-- Speed Race Game -->
+                    <div id="speedraceGame" class="game-content hidden">
+                        <div class="bg-green-50 p-6 rounded-lg mb-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-bold text-green-800">⚡ Speed Race Challenge</h3>
+                                <div class="flex items-center space-x-4">
+                                    <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                        Waktu: <span id="speedraceTimer">30</span>s
+                                    </span>
+                                    <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                        Skor: <span id="speedraceScore">0</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-green-700 mb-4">Pilih algoritma yang paling cocok untuk setiap skenario secepat mungkin!</p>
+                            
+                            <div id="speedraceQuestion" class="bg-white p-6 rounded-lg border-2 border-green-200">
+                                <!-- Questions will be loaded here -->
+                            </div>
+                            
+                            <div class="mt-4 text-center">
+                                <button onclick="startSpeedRace()" id="speedraceStartBtn" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold text-lg">
+                                    🚀 Mulai Race!
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Algorithm Puzzle Game -->
+                    <div id="puzzleGame" class="game-content hidden">
+                        <div class="bg-purple-50 p-6 rounded-lg mb-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-bold text-purple-800">🧩 Algorithm Puzzle</h3>
+                                <div class="flex items-center space-x-4">
+                                    <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                        Langkah: <span id="puzzleMoves">0</span>
+                                    </span>
+                                    <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                        Target: <span id="puzzleTarget">5</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-purple-700 mb-4">Susun langkah-langkah algoritma BFS dalam urutan yang benar!</p>
+                            
+                            <div class="grid lg:grid-cols-2 gap-6">
+                                <div class="bg-white p-4 rounded-lg border">
+                                    <h4 class="font-semibold text-gray-700 mb-3">Langkah-langkah Tersedia:</h4>
+                                    <div id="puzzleSteps" class="space-y-2">
+                                        <!-- Puzzle steps will be loaded here -->
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-4 rounded-lg border">
+                                    <h4 class="font-semibold text-gray-700 mb-3">Urutan Algoritma BFS:</h4>
+                                    <div id="puzzleSolution" class="space-y-2 min-h-[200px] border-2 border-dashed border-purple-300 p-3 rounded">
+                                        <div class="text-gray-500 text-center">Seret langkah ke sini...</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 flex justify-between">
+                                <button onclick="resetPuzzle()" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-semibold">
+                                    🔄 Reset
+                                </button>
+                                <button onclick="checkPuzzleAnswer()" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold">
+                                    ✓ Cek Urutan
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="puzzleResult" class="hidden mt-4 p-4 rounded-lg"></div>
+                    </div>
+
+                    <div class="text-center mt-6">
+                        <button onclick="backToGameSelection()" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold">
+                            ← Kembali ke Menu Game
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -345,18 +814,24 @@
                 </h2>
 
                 <div id="evaluationContent">
-                    <div class="text-center py-12">
-                        <div class="text-6xl mb-4">📝</div>
-                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Selesaikan Latihan Terlebih Dahulu</h3>
-                        <p class="text-gray-600 mb-6">Untuk melihat hasil evaluasi, silakan selesaikan semua soal latihan terlebih dahulu.</p>
-                        <button onclick="showSection('latihan')" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
-                            Mulai Latihan
+                    <div id="quizContainer" class="space-y-6">
+                        <!-- Evaluation questions will be loaded here -->
+                    </div>
+
+                    <div class="flex justify-between mt-8">
+                        <button onclick="previousQuestion()" id="prevBtn" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-200 disabled:opacity-50" disabled>
+                            ← Sebelumnya
+                        </button>
+                        <span id="questionCounter" class="flex items-center text-gray-600 font-medium">
+                            Soal 1 dari 6
+                        </span>
+                        <button onclick="nextQuestion()" id="nextBtn" class="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">
+                            Selanjutnya →
                         </button>
                     </div>
                 </div>
             </div>
         </section>
-        <div class="sketchfab-embed-wrapper"> <iframe title="Low Poly City" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/c5f3bb50fed947e8891b236bc85b4f7d/embed"> </iframe> <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;"> <a href="https://sketchfab.com/3d-models/low-poly-city-c5f3bb50fed947e8891b236bc85b4f7d?utm_medium=embed&utm_campaign=share-popup&utm_content=c5f3bb50fed947e8891b236bc85b4f7d" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;"> Low Poly City </a> by <a href="https://sketchfab.com/viznum?utm_medium=embed&utm_campaign=share-popup&utm_content=c5f3bb50fed947e8891b236bc85b4f7d" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;"> Alexander Kovalev / Svitlana Prylepska </a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=c5f3bb50fed947e8891b236bc85b4f7d" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a></p></div>
     </main>
 
     <script>
@@ -365,61 +840,164 @@
         let userAnswers = [];
         let searchInProgress = false;
         
-        const questions = [
+        // Game data
+        const gameData = {
+            algorace: {
+                round: 1,
+                score: 0,
+                maxRounds: 5,
+                currentPrediction: null,
+                races: [
+                    { 
+                        start: 'A', end: 'E', bfsSteps: 3, dfsSteps: 3, winner: 'tie',
+                        bfsPattern: ['A', 'B,C', 'E'], 
+                        dfsPattern: ['A', 'B', 'E'],
+                        bfsDistance: 3, dfsDistance: 3
+                    },
+                    { 
+                        start: 'A', end: 'H', bfsSteps: 3, dfsSteps: 4, winner: 'bfs',
+                        bfsPattern: ['A', 'B,C', 'H'], 
+                        dfsPattern: ['A', 'C', 'G', 'H'],
+                        bfsDistance: 3, dfsDistance: 4
+                    },
+                    { 
+                        start: 'B', end: 'G', bfsSteps: 4, dfsSteps: 5, winner: 'bfs',
+                        bfsPattern: ['B', 'A,D,E', 'C', 'G'], 
+                        dfsPattern: ['B', 'A', 'C', 'D', 'G'],
+                        bfsDistance: 4, dfsDistance: 5
+                    },
+                    { 
+                        start: 'C', end: 'F', bfsSteps: 3, dfsSteps: 3, winner: 'tie',
+                        bfsPattern: ['C', 'A,D,G,H', 'F'], 
+                        dfsPattern: ['C', 'D', 'F'],
+                        bfsDistance: 3, dfsDistance: 3
+                    },
+                    { 
+                        start: 'A', end: 'F', bfsSteps: 4, dfsSteps: 6, winner: 'bfs',
+                        bfsPattern: ['A', 'B,C', 'D,E,G,H', 'F'], 
+                        dfsPattern: ['A', 'B', 'D', 'C', 'G', 'F'],
+                        bfsDistance: 4, dfsDistance: 6
+                    }
+                ]
+            },
+            speedrace: {
+                score: 0,
+                timeLeft: 30,
+                currentQuestion: 0,
+                questions: [
+                    {
+                        scenario: "Pengiriman paket e-commerce dengan rute terpendek",
+                        options: ["BFS", "DFS", "Linear Search"],
+                        correct: 0,
+                        points: 10
+                    },
+                    {
+                        scenario: "Mencari semua jalur alternatif untuk backup",
+                        options: ["BFS", "DFS", "Binary Search"],
+                        correct: 1,
+                        points: 15
+                    },
+                    {
+                        scenario: "Deteksi jalur melingkar dalam rute pengiriman",
+                        options: ["BFS", "DFS", "Dijkstra"],
+                        correct: 1,
+                        points: 20
+                    },
+                    {
+                        scenario: "Pencarian rute dengan memori terbatas",
+                        options: ["BFS", "DFS", "A*"],
+                        correct: 1,
+                        points: 15
+                    },
+                    {
+                        scenario: "Mencari rute terpendek dalam graf tidak berbobot",
+                        options: ["DFS", "BFS", "Greedy"],
+                        correct: 1,
+                        points: 10
+                    }
+                ]
+            },
+            puzzle: {
+                moves: 0,
+                target: 5,
+                steps: [
+                    "Inisialisasi queue dengan node awal",
+                    "Tandai node awal sebagai dikunjungi",
+                    "Ambil node dari depan queue",
+                    "Periksa apakah node adalah tujuan",
+                    "Tambahkan tetangga yang belum dikunjungi ke queue",
+                    "Ulangi sampai queue kosong atau tujuan ditemukan"
+                ],
+                correctOrder: [0, 1, 2, 3, 4, 5]
+            }
+        };
+
+        const evaluationQuestions = [
             {
-                question: "Apa perbedaan utama antara BFS dan DFS dalam pencarian rute?",
+                question: "Mengapa algoritma BFS menjamin solusi optimal dalam graf tidak berbobot?",
                 options: [
-                    "BFS lebih cepat dari DFS",
-                    "BFS menjelajahi level demi level, DFS menjelajahi sedalam mungkin",
-                    "DFS selalu menemukan rute terpendek",
-                    "BFS hanya untuk graf berbobot"
+                    "Karena BFS selalu lebih cepat dari algoritma lain",
+                    "Karena BFS menjelajahi node berdasarkan jarak dari node awal",
+                    "Karena BFS menggunakan memori yang efisien",
+                    "Karena BFS dapat mendeteksi siklus dalam graf"
                 ],
                 correct: 1,
-                explanation: "BFS menjelajahi semua node pada level yang sama sebelum pindah ke level berikutnya, sedangkan DFS menjelajahi sejauh mungkin pada satu cabang sebelum backtrack."
+                explanation: "BFS menjamin solusi optimal karena menjelajahi node berdasarkan level/jarak dari node awal, sehingga node tujuan yang pertama kali ditemukan pasti melalui jalur terpendek."
             },
             {
-                question: "Dalam konteks pengiriman barang, kapan sebaiknya menggunakan algoritma BFS?",
+                question: "Dalam implementasi sistem pengiriman real-time, faktor apa yang paling penting dalam memilih algoritma searching?",
                 options: [
-                    "Ketika ingin mencari semua kemungkinan rute",
-                    "Ketika ingin mencari rute terpendek dalam graf tidak berbobot",
-                    "Ketika memori terbatas",
-                    "Ketika graf memiliki banyak siklus"
-                ],
-                correct: 1,
-                explanation: "BFS cocok untuk mencari rute terpendek dalam graf tidak berbobot karena menjamin solusi optimal dengan menjelajahi level demi level."
-            },
-            {
-                question: "Kompleksitas waktu algoritma BFS pada graf dengan V vertex dan E edge adalah:",
-                options: [
-                    "O(V)",
-                    "O(E)",
-                    "O(V + E)",
-                    "O(V × E)"
+                    "Kompleksitas waktu saja",
+                    "Kompleksitas ruang saja", 
+                    "Keseimbangan antara waktu, ruang, dan kualitas solusi",
+                    "Kemudahan implementasi saja"
                 ],
                 correct: 2,
-                explanation: "BFS mengunjungi setiap vertex sekali (O(V)) dan memeriksa setiap edge sekali (O(E)), sehingga kompleksitas totalnya adalah O(V + E)."
+                explanation: "Sistem real-time memerlukan keseimbangan antara kecepatan eksekusi, penggunaan memori, dan kualitas solusi untuk memberikan performa optimal dalam kondisi operasional yang beragam."
             },
             {
-                question: "Struktur data apa yang digunakan dalam implementasi algoritma BFS?",
+                question: "Bagaimana cara mengoptimalkan algoritma BFS untuk graf dengan banyak node?",
                 options: [
-                    "Stack",
-                    "Queue",
-                    "Priority Queue",
-                    "Array"
+                    "Menggunakan array sebagai pengganti queue",
+                    "Menggunakan bidirectional search dan pruning",
+                    "Mengurangi jumlah node yang dikunjungi secara acak",
+                    "Menggunakan rekursi untuk menghemat memori"
                 ],
                 correct: 1,
-                explanation: "BFS menggunakan Queue (antrian) untuk memastikan node dieksplorasi dalam urutan FIFO (First In, First Out), sesuai dengan prinsip level-by-level exploration."
+                explanation: "Bidirectional search (pencarian dari kedua arah) dan pruning (memangkas cabang yang tidak perlu) dapat mengurangi ruang pencarian secara signifikan pada graf besar."
             },
             {
-                question: "Dalam skenario pengiriman darurat, algoritma mana yang lebih cocok untuk mencari rute tercepat?",
+                question: "Dalam konteks pengiriman multi-tujuan, modifikasi apa yang diperlukan pada algoritma BFS standar?",
                 options: [
-                    "DFS karena lebih cepat",
-                    "BFS karena menjamin rute terpendek",
-                    "Dijkstra karena mempertimbangkan bobot jalan",
-                    "Linear Search karena sederhana"
+                    "Menggunakan multiple queues untuk setiap tujuan",
+                    "Mengubah kondisi terminasi untuk menangani multiple goals",
+                    "Mengganti BFS dengan DFS untuk efisiensi",
+                    "Menggunakan priority queue berdasarkan jarak"
+                ],
+                correct: 1,
+                explanation: "Untuk multi-tujuan, kondisi terminasi BFS perlu dimodifikasi untuk melanjutkan pencarian hingga semua tujuan ditemukan atau menggunakan variasi seperti multi-goal BFS."
+            },
+            {
+                question: "Analisis kompleksitas: Jika graf memiliki V=1000 node dan E=5000 edge, berapa operasi maksimum yang diperlukan BFS?",
+                options: [
+                    "1000 operasi",
+                    "5000 operasi", 
+                    "6000 operasi",
+                    "5,000,000 operasi"
                 ],
                 correct: 2,
-                explanation: "Untuk pengiriman darurat dengan mempertimbangkan jarak/waktu tempuh, algoritma Dijkstra lebih cocok karena dapat menangani graf berbobot dan mencari rute dengan total bobot minimum."
+                explanation: "BFS memiliki kompleksitas O(V + E). Dengan V=1000 dan E=5000, operasi maksimum adalah 1000 + 5000 = 6000 operasi untuk mengunjungi semua node dan edge."
+            },
+            {
+                question: "Dalam skenario pengiriman dengan kendala waktu real-time, strategi apa yang paling efektif?",
+                options: [
+                    "Selalu menggunakan algoritma tercepat tanpa mempertimbangkan kualitas",
+                    "Pre-compute rute populer dan gunakan caching",
+                    "Menggunakan algoritma yang paling akurat meskipun lambat",
+                    "Menggunakan pencarian acak untuk menghemat waktu"
+                ],
+                correct: 1,
+                explanation: "Pre-computing rute populer dan caching hasil pencarian dapat memberikan respons instan untuk query umum sambil tetap mempertahankan kualitas solusi."
             }
         ];
 
@@ -615,10 +1193,447 @@
             });
         }
 
-        // Quiz functions
+        // Audio functions
+        function playSound(type) {
+            // Create audio context for sound effects
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            function createTone(frequency, duration, type = 'sine') {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+                oscillator.type = type;
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+            }
+            
+            switch(type) {
+                case 'click':
+                    createTone(800, 0.1);
+                    break;
+                case 'drop':
+                    createTone(600, 0.2);
+                    break;
+                case 'clear':
+                    createTone(400, 0.3);
+                    break;
+                case 'success':
+                    // Success melody
+                    createTone(523, 0.2); // C
+                    setTimeout(() => createTone(659, 0.2), 100); // E
+                    setTimeout(() => createTone(784, 0.2), 200); // G
+                    setTimeout(() => createTone(1047, 0.4), 300); // C
+                    break;
+                case 'error':
+                    createTone(300, 0.5, 'sawtooth');
+                    break;
+            }
+        }
+
+        // Game functions
+        function startGame(gameType) {
+            playSound('click');
+            document.getElementById('gameSelection').classList.add('hidden');
+            document.getElementById('gameArea').classList.remove('hidden');
+            
+            // Hide all games first
+            document.querySelectorAll('.game-content').forEach(game => {
+                game.classList.add('hidden');
+            });
+            
+            // Show selected game
+            document.getElementById(gameType + 'Game').classList.remove('hidden');
+            
+            // Initialize specific game
+            switch(gameType) {
+                case 'algorace':
+                    initAlgoraceGame();
+                    break;
+                case 'speedrace':
+                    initSpeedRaceGame();
+                    break;
+                case 'puzzle':
+                    initPuzzleGame();
+                    break;
+            }
+        }
+
+        function backToGameSelection() {
+            playSound('click');
+            document.getElementById('gameArea').classList.add('hidden');
+            document.getElementById('gameSelection').classList.remove('hidden');
+        }
+
+        // Algorithm Race Game
+        function initAlgoraceGame() {
+            gameData.algorace.round = 1;
+            gameData.algorace.score = 0;
+            gameData.algorace.currentPrediction = null;
+            
+            document.getElementById('raceRound').textContent = gameData.algorace.round;
+            document.getElementById('raceScore').textContent = gameData.algorace.score;
+            
+            loadRaceRound();
+        }
+
+        function loadRaceRound() {
+            const race = gameData.algorace.races[gameData.algorace.round - 1];
+            document.getElementById('raceRoute').textContent = `${race.start} → ${race.end}`;
+            
+            // Show search patterns
+            displaySearchPatterns(race);
+            
+            // Reset race track
+            document.getElementById('bfsRunner').style.left = '10px';
+            document.getElementById('dfsRunner').style.left = '10px';
+            document.getElementById('bfsProgress').style.width = '0%';
+            document.getElementById('dfsProgress').style.width = '0%';
+            document.getElementById('bfsSteps').textContent = '0';
+            document.getElementById('dfsSteps').textContent = '0';
+            
+            // Show prediction buttons
+            document.getElementById('predictionButtons').classList.remove('hidden');
+            document.getElementById('startRaceBtn').classList.remove('hidden');
+            document.getElementById('raceResult').classList.add('hidden');
+            
+            gameData.algorace.currentPrediction = null;
+        }
+
+        function displaySearchPatterns(race) {
+            // Display BFS pattern
+            const bfsPatternDiv = document.getElementById('bfsPattern');
+            bfsPatternDiv.innerHTML = race.bfsPattern.map((level, index) => 
+                `<div class="mb-1">
+                    <span class="font-semibold text-green-800">Level ${index + 1}:</span> 
+                    <span class="bg-green-100 px-2 py-1 rounded text-xs">${level}</span>
+                </div>`
+            ).join('');
+            document.getElementById('bfsDistance').textContent = race.bfsDistance;
+            
+            // Display DFS pattern
+            const dfsPatternDiv = document.getElementById('dfsPattern');
+            dfsPatternDiv.innerHTML = race.dfsPattern.map((step, index) => 
+                `<div class="mb-1">
+                    <span class="font-semibold text-purple-800">Step ${index + 1}:</span> 
+                    <span class="bg-purple-100 px-2 py-1 rounded text-xs">${step}</span>
+                </div>`
+            ).join('');
+            document.getElementById('dfsDistance').textContent = race.dfsDistance;
+        }
+
+        function makePrediction(prediction) {
+            playSound('click');
+            gameData.algorace.currentPrediction = prediction;
+            
+            // Highlight selected button
+            document.querySelectorAll('#predictionButtons button').forEach(btn => {
+                btn.classList.remove('ring-4', 'ring-yellow-300');
+            });
+            
+            event.target.classList.add('ring-4', 'ring-yellow-300');
+        }
+
+        function startRace() {
+            if (!gameData.algorace.currentPrediction) {
+                playSound('error');
+                alert('Silakan pilih prediksi terlebih dahulu!');
+                return;
+            }
+            
+            playSound('success');
+            document.getElementById('predictionButtons').classList.add('hidden');
+            document.getElementById('startRaceBtn').classList.add('hidden');
+            
+            const race = gameData.algorace.races[gameData.algorace.round - 1];
+            animateRace(race);
+        }
+
+        function animateRace(race) {
+            let bfsStep = 0;
+            let dfsStep = 0;
+            const maxSteps = Math.max(race.bfsSteps, race.dfsSteps);
+            
+            const interval = setInterval(() => {
+                // Update BFS
+                if (bfsStep < race.bfsSteps) {
+                    bfsStep++;
+                    const bfsProgress = (bfsStep / race.bfsSteps) * 100;
+                    document.getElementById('bfsProgress').style.width = bfsProgress + '%';
+                    document.getElementById('bfsRunner').style.left = (10 + (bfsProgress * 5.5)) + 'px';
+                    document.getElementById('bfsSteps').textContent = bfsStep;
+                }
+                
+                // Update DFS
+                if (dfsStep < race.dfsSteps) {
+                    dfsStep++;
+                    const dfsProgress = (dfsStep / race.dfsSteps) * 100;
+                    document.getElementById('dfsProgress').style.width = dfsProgress + '%';
+                    document.getElementById('dfsRunner').style.left = (10 + (dfsProgress * 5.5)) + 'px';
+                    document.getElementById('dfsSteps').textContent = dfsStep;
+                }
+                
+                // Check if race is finished
+                if (bfsStep >= race.bfsSteps && dfsStep >= race.dfsSteps) {
+                    clearInterval(interval);
+                    setTimeout(() => showRaceResult(race), 1000);
+                }
+            }, 800);
+        }
+
+        function showRaceResult(race) {
+            const isCorrect = gameData.algorace.currentPrediction === race.winner;
+            const resultDiv = document.getElementById('raceResult');
+            
+            if (isCorrect) {
+                playSound('success');
+                gameData.algorace.score += 20;
+                resultDiv.className = 'mt-4 p-4 rounded-lg bg-green-50 border border-green-200';
+                resultDiv.innerHTML = `
+                    <div class="flex items-center mb-2">
+                        <span class="text-2xl mr-2">🎉</span>
+                        <span class="font-bold text-green-800">Prediksi Benar!</span>
+                    </div>
+                    <p class="text-green-700 mb-2">
+                        ${race.winner === 'bfs' ? 'BFS menang' : race.winner === 'dfs' ? 'DFS menang' : 'Hasil seri'} 
+                        (BFS: ${race.bfsSteps} langkah, DFS: ${race.dfsSteps} langkah)
+                    </p>
+                    <p class="text-green-600 text-sm">+20 poin! 🏆</p>
+                `;
+            } else {
+                playSound('error');
+                resultDiv.className = 'mt-4 p-4 rounded-lg bg-red-50 border border-red-200';
+                resultDiv.innerHTML = `
+                    <div class="flex items-center mb-2">
+                        <span class="text-2xl mr-2">❌</span>
+                        <span class="font-bold text-red-800">Prediksi Salah!</span>
+                    </div>
+                    <p class="text-red-700 mb-2">
+                        ${race.winner === 'bfs' ? 'BFS menang' : race.winner === 'dfs' ? 'DFS menang' : 'Hasil seri'} 
+                        (BFS: ${race.bfsSteps} langkah, DFS: ${race.dfsSteps} langkah)
+                    </p>
+                    <p class="text-red-600 text-sm">Coba analisis pola pencarian lebih teliti! 🤔</p>
+                `;
+            }
+            
+            resultDiv.classList.remove('hidden');
+            document.getElementById('raceScore').textContent = gameData.algorace.score;
+            
+            // Show next round button
+            setTimeout(() => {
+                if (gameData.algorace.round < gameData.algorace.maxRounds) {
+                    resultDiv.innerHTML += `
+                        <div class="mt-3 text-center">
+                            <button onclick="nextRaceRound()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
+                                Round Selanjutnya →
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    // Game finished
+                    resultDiv.innerHTML += `
+                        <div class="mt-3 text-center">
+                            <div class="text-lg font-bold text-gray-800 mb-2">🏁 Race Selesai!</div>
+                            <p class="text-gray-700 mb-3">Skor Akhir: ${gameData.algorace.score}/100</p>
+                            <button onclick="initAlgoraceGame()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold">
+                                🔄 Main Lagi
+                            </button>
+                        </div>
+                    `;
+                }
+            }, 2000);
+        }
+
+        function nextRaceRound() {
+            playSound('click');
+            gameData.algorace.round++;
+            document.getElementById('raceRound').textContent = gameData.algorace.round;
+            loadRaceRound();
+        }
+
+        // Speed Race Game
+        function initSpeedRaceGame() {
+            gameData.speedrace.score = 0;
+            gameData.speedrace.timeLeft = 30;
+            gameData.speedrace.currentQuestion = 0;
+            document.getElementById('speedraceScore').textContent = gameData.speedrace.score;
+            document.getElementById('speedraceTimer').textContent = gameData.speedrace.timeLeft;
+        }
+
+        function startSpeedRace() {
+            document.getElementById('speedraceStartBtn').classList.add('hidden');
+            loadSpeedRaceQuestion();
+            startSpeedRaceTimer();
+        }
+
+        function loadSpeedRaceQuestion() {
+            const question = gameData.speedrace.questions[gameData.speedrace.currentQuestion];
+            const container = document.getElementById('speedraceQuestion');
+            
+            container.innerHTML = `
+                <h4 class="font-semibold text-gray-800 mb-4">Skenario ${gameData.speedrace.currentQuestion + 1}:</h4>
+                <p class="text-gray-700 mb-6 text-lg">${question.scenario}</p>
+                <div class="grid grid-cols-3 gap-4">
+                    ${question.options.map((option, index) => `
+                        <button onclick="answerSpeedRace(${index})" class="bg-white hover:bg-green-50 border-2 border-gray-200 hover:border-green-400 p-4 rounded-lg font-semibold text-gray-700 hover:text-green-700 transition duration-200">
+                            ${option}
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function answerSpeedRace(selectedIndex) {
+            const question = gameData.speedrace.questions[gameData.speedrace.currentQuestion];
+            const isCorrect = selectedIndex === question.correct;
+            
+            if (isCorrect) {
+                gameData.speedrace.score += question.points;
+                document.getElementById('speedraceScore').textContent = gameData.speedrace.score;
+            }
+            
+            gameData.speedrace.currentQuestion++;
+            
+            if (gameData.speedrace.currentQuestion < gameData.speedrace.questions.length) {
+                setTimeout(() => loadSpeedRaceQuestion(), 500);
+            } else {
+                endSpeedRace();
+            }
+        }
+
+        function startSpeedRaceTimer() {
+            const timer = setInterval(() => {
+                gameData.speedrace.timeLeft--;
+                document.getElementById('speedraceTimer').textContent = gameData.speedrace.timeLeft;
+                
+                if (gameData.speedrace.timeLeft <= 0) {
+                    clearInterval(timer);
+                    endSpeedRace();
+                }
+            }, 1000);
+        }
+
+        function endSpeedRace() {
+            const container = document.getElementById('speedraceQuestion');
+            let performance = '';
+            if (gameData.speedrace.score >= 60) performance = 'Excellent! 🏆';
+            else if (gameData.speedrace.score >= 40) performance = 'Good! 👍';
+            else performance = 'Keep trying! 💪';
+            
+            container.innerHTML = `
+                <div class="text-center">
+                    <div class="text-4xl mb-3">⏰</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Waktu Habis!</h3>
+                    <p class="text-gray-700 mb-2">Skor Akhir: <span class="font-bold text-green-600">${gameData.speedrace.score}</span></p>
+                    <p class="text-gray-600 mb-4">${performance}</p>
+                    <button onclick="initSpeedRaceGame(); document.getElementById('speedraceStartBtn').classList.remove('hidden')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold">
+                        🔄 Main Lagi
+                    </button>
+                </div>
+            `;
+        }
+
+        // Algorithm Puzzle Game
+        function initPuzzleGame() {
+            gameData.puzzle.moves = 0;
+            document.getElementById('puzzleMoves').textContent = gameData.puzzle.moves;
+            loadPuzzleSteps();
+        }
+
+        function loadPuzzleSteps() {
+            const stepsContainer = document.getElementById('puzzleSteps');
+            const shuffledSteps = [...gameData.puzzle.steps].sort(() => Math.random() - 0.5);
+            
+            stepsContainer.innerHTML = shuffledSteps.map((step, index) => `
+                <div class="puzzle-step bg-purple-100 p-3 rounded-lg border cursor-move" draggable="true" data-step="${gameData.puzzle.steps.indexOf(step)}">
+                    ${step}
+                </div>
+            `).join('');
+            
+            setupPuzzleDragDrop();
+        }
+
+        function setupPuzzleDragDrop() {
+            const solutionArea = document.getElementById('puzzleSolution');
+            
+            document.querySelectorAll('.puzzle-step').forEach(step => {
+                step.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', this.dataset.step);
+                    e.dataTransfer.setData('text/html', this.outerHTML);
+                });
+            });
+            
+            solutionArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+            });
+            
+            solutionArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                const stepIndex = e.dataTransfer.getData('text/plain');
+                const stepHtml = e.dataTransfer.getData('text/html');
+                
+                if (this.children.length === 1 && this.children[0].textContent.includes('Seret langkah')) {
+                    this.innerHTML = '';
+                }
+                
+                const stepDiv = document.createElement('div');
+                stepDiv.innerHTML = stepHtml;
+                this.appendChild(stepDiv.firstChild);
+                
+                gameData.puzzle.moves++;
+                document.getElementById('puzzleMoves').textContent = gameData.puzzle.moves;
+            });
+        }
+
+        function checkPuzzleAnswer() {
+            const solutionSteps = Array.from(document.getElementById('puzzleSolution').children);
+            const userOrder = solutionSteps.map(step => parseInt(step.dataset.step));
+            const isCorrect = JSON.stringify(userOrder) === JSON.stringify(gameData.puzzle.correctOrder);
+            
+            const resultDiv = document.getElementById('puzzleResult');
+            
+            if (isCorrect) {
+                resultDiv.className = 'mt-4 p-4 rounded-lg bg-green-50 border border-green-200';
+                resultDiv.innerHTML = `
+                    <div class="flex items-center mb-2">
+                        <span class="text-2xl mr-2">🎉</span>
+                        <span class="font-bold text-green-800">Perfect! Urutan Benar!</span>
+                    </div>
+                    <p class="text-green-700">Anda berhasil menyusun algoritma BFS dengan benar dalam ${gameData.puzzle.moves} langkah!</p>
+                `;
+            } else {
+                resultDiv.className = 'mt-4 p-4 rounded-lg bg-red-50 border border-red-200';
+                resultDiv.innerHTML = `
+                    <div class="flex items-center mb-2">
+                        <span class="text-2xl mr-2">❌</span>
+                        <span class="font-bold text-red-800">Urutan Belum Benar!</span>
+                    </div>
+                    <p class="text-red-700">Coba susun kembali langkah-langkah algoritma BFS sesuai urutan yang benar.</p>
+                `;
+            }
+            
+            resultDiv.classList.remove('hidden');
+        }
+
+        function resetPuzzle() {
+            document.getElementById('puzzleSolution').innerHTML = '<div class="text-gray-500 text-center">Seret langkah ke sini...</div>';
+            document.getElementById('puzzleResult').classList.add('hidden');
+            gameData.puzzle.moves = 0;
+            document.getElementById('puzzleMoves').textContent = gameData.puzzle.moves;
+            loadPuzzleSteps();
+        }
+
+        // Evaluation Quiz functions
         function loadQuestion() {
             const container = document.getElementById('quizContainer');
-            const question = questions[currentQuestion];
+            const question = evaluationQuestions[currentQuestion];
             
             container.innerHTML = `
                 <div class="bg-blue-50 p-6 rounded-lg">
@@ -658,12 +1673,12 @@
             
             // Update navigation
             document.getElementById('prevBtn').disabled = currentQuestion === 0;
-            document.getElementById('nextBtn').textContent = currentQuestion === questions.length - 1 ? 'Selesai' : 'Selanjutnya →';
-            document.getElementById('questionCounter').textContent = `Soal ${currentQuestion + 1} dari ${questions.length}`;
+            document.getElementById('nextBtn').textContent = currentQuestion === evaluationQuestions.length - 1 ? 'Selesai' : 'Selanjutnya →';
+            document.getElementById('questionCounter').textContent = `Soal ${currentQuestion + 1} dari ${evaluationQuestions.length}`;
         }
 
         function nextQuestion() {
-            if (currentQuestion < questions.length - 1) {
+            if (currentQuestion < evaluationQuestions.length - 1) {
                 currentQuestion++;
                 loadQuestion();
             } else {
@@ -680,8 +1695,8 @@
         }
 
         function showEvaluation() {
-            const correctAnswers = userAnswers.filter((answer, index) => answer === questions[index].correct).length;
-            const percentage = Math.round((correctAnswers / questions.length) * 100);
+            const correctAnswers = userAnswers.filter((answer, index) => answer === evaluationQuestions[index].correct).length;
+            const percentage = Math.round((correctAnswers / evaluationQuestions.length) * 100);
             
             let grade, message, color;
             if (percentage >= 80) {
@@ -705,7 +1720,7 @@
             document.getElementById('evaluationContent').innerHTML = `
                 <div class="text-center">
                     <div class="text-6xl mb-4">${percentage >= 70 ? '🎉' : '📚'}</div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Hasil Evaluasi</h3>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Hasil Evaluasi Akhir</h3>
                     
                     <div class="bg-${color}-50 border border-${color}-200 rounded-lg p-6 mb-6 max-w-md mx-auto">
                         <div class="text-4xl font-bold text-${color}-600 mb-2">${percentage}%</div>
@@ -714,41 +1729,70 @@
                     </div>
                     
                     <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-8">
-                        <div class="bg-white p-4 rounded-lg border">
+                        <div class="bg-white p-4 rounded-lg border shadow-sm">
                             <div class="text-2xl font-bold text-green-600">${correctAnswers}</div>
                             <div class="text-gray-600">Jawaban Benar</div>
                         </div>
-                        <div class="bg-white p-4 rounded-lg border">
-                            <div class="text-2xl font-bold text-red-600">${questions.length - correctAnswers}</div>
+                        <div class="bg-white p-4 rounded-lg border shadow-sm">
+                            <div class="text-2xl font-bold text-red-600">${evaluationQuestions.length - correctAnswers}</div>
                             <div class="text-gray-600">Jawaban Salah</div>
                         </div>
                     </div>
                     
+                    <div class="bg-blue-50 p-6 rounded-lg mb-6 max-w-2xl mx-auto">
+                        <h4 class="font-semibold text-blue-800 mb-3">📈 Rekomendasi Pembelajaran:</h4>
+                        <div class="text-left space-y-2 text-blue-700">
+                            ${percentage >= 80 ? 
+                                '• Anda sudah menguasai konsep dengan baik<br>• Coba eksplorasi algoritma searching lanjutan<br>• Praktikkan implementasi dalam proyek nyata' :
+                                percentage >= 60 ?
+                                '• Pelajari kembali konsep BFS dan DFS<br>• Latih lebih banyak soal praktis<br>• Fokus pada aplikasi dalam pengiriman barang' :
+                                '• Mulai dari teori dasar algoritma searching<br>• Gunakan simulasi untuk memahami konsep<br>• Konsultasi dengan instruktur untuk bimbingan'
+                            }
+                        </div>
+                    </div>
+                    
                     <div class="space-x-4">
-                        <button onclick="resetQuiz()" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
-                            🔄 Ulangi Latihan
+                        <button onclick="resetQuiz()" class="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
+                            🔄 Ulangi Evaluasi
                         </button>
-                        <button onclick="showSection('teori')" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
-                            📚 Pelajari Lagi
+                        <button onclick="showSection('latihan')" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
+                            🎮 Main Game Lagi
+                        </button>
+                        <button onclick="showSection('teori')" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
+                            📚 Pelajari Teori
                         </button>
                     </div>
                 </div>
             `;
-            
-            showSection('evaluasi');
         }
 
         function resetQuiz() {
             currentQuestion = 0;
             userAnswers = [];
             loadQuestion();
-            showSection('latihan');
         }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             loadQuestion();
         });
+
+        // Landing page function
+        function enterApplication() {
+            playSound('success');
+            
+            // Hide landing page
+            document.getElementById('landingPage').classList.add('hidden');
+            
+            // Show main application
+            setTimeout(() => {
+                const mainApp = document.getElementById('mainApp');
+                mainApp.style.opacity = '1';
+                mainApp.style.visibility = 'visible';
+            }, 400);
+        }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'983f8deca15afd1b',t:'MTc1ODY4ODMwOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    
+    </div> <!-- End Main App -->
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98409568572bab44',t:'MTc1ODY5OTEwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
