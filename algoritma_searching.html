@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<video controls autoplay muted class="w-full rounded-lg">
+    <source src="video-pembuka.mp4" type="video/mp4">
+    <source src="video-pembuka.webm" type="video/webm">
+    Video tidak dapat diputar di browser ini.
+</video><!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -123,10 +127,10 @@
             <div class="bg-black rounded-xl shadow-2xl overflow-hidden mb-8">
                 <!-- Video Container -->
                 <div class="relative bg-gray-900 aspect-video">
-                    <!-- Demo Video (replace with your actual video) -->
-                    <video id="openingVideo" class="w-full h-full object-cover rounded-lg" autoplay onended="autoNavigateToLanding()">
-                        <!-- Replace these with your actual video files -->
+                    <!-- Bumper Video -->
+                    <video id="openingVideo" class="w-full h-full object-cover rounded-lg" autoplay muted onended="autoNavigateToLanding()">
                         <source src="bumper.mp4" type="video/mp4">
+                        <source src="bumper.webm" type="video/webm">
                         
                         <!-- Fallback content if video fails to load -->
                         <div class="absolute inset-0 flex items-center justify-center bg-gray-800">
@@ -139,12 +143,7 @@
                             </div>
                         </div>
                     </video>
-                    
-                    <!-- Your uploaded video placed here -->
-                    <video controls autoplay class="w-full rounded-lg">
-                        <source src="bumper.mp4" type="video/mp4">
-                        Video tidak dapat diputar di browser ini.
-                    </video>
+
                     
                     <!-- Loading overlay -->
                     <div id="videoLoading" class="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90">
@@ -156,19 +155,7 @@
                         </div>
                     </div>
                     
-                    <!-- Skip button (appears after 3 seconds) -->
-                    <div id="skipButton" class="absolute top-4 right-4 hidden">
-                        <button onclick="skipVideo()" class="bg-black bg-opacity-50 hover:bg-opacity-70 text-white px-4 py-2 rounded-lg text-sm font-semibold transition duration-200">
-                            ⏭️ Lewati
-                        </button>
-                    </div>
-                    
-                    <!-- Progress bar -->
-                    <div class="absolute bottom-0 left-0 right-0 bg-gray-800 bg-opacity-50 p-2">
-                        <div class="bg-gray-700 rounded-full h-1">
-                            <div id="videoProgress" class="bg-blue-500 h-1 rounded-full transition-all duration-300" style="width: 0%"></div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
             
@@ -1690,13 +1677,8 @@
         function initVideoPage() {
             const video = document.getElementById('openingVideo');
             const loading = document.getElementById('videoLoading');
-            const skipButton = document.getElementById('skipButton');
-            const progressBar = document.getElementById('videoProgress');
             
-            // Show skip button after 3 seconds
-            setTimeout(() => {
-                skipButton.classList.remove('hidden');
-            }, 3000);
+
             
             // Handle video loading
             video.addEventListener('loadstart', function() {
@@ -1707,13 +1689,7 @@
                 loading.classList.add('hidden');
             });
             
-            // Update progress bar
-            video.addEventListener('timeupdate', function() {
-                if (video.duration) {
-                    const progress = (video.currentTime / video.duration) * 100;
-                    progressBar.style.width = progress + '%';
-                }
-            });
+
             
             // Handle video load error - auto navigate after 5 seconds
             video.addEventListener('error', function() {
@@ -1755,11 +1731,7 @@
                         <button onclick="playVideo()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition duration-200">
                             ▶️ Putar Video
                         </button>
-                        <div class="mt-4">
-                            <button onclick="skipVideo()" class="text-gray-300 hover:text-white text-sm underline">
-                                Lewati Video →
-                            </button>
-                        </div>
+
                     </div>
                 `;
             });
@@ -1835,5 +1807,5 @@
     </script>
     
     </div> <!-- End Main App -->
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98421935d54ba084',t:'MTc1ODcxNDk4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9842474a56da91c6',t:'MTc1ODcxNjg3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
