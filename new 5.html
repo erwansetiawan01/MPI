@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layar Penuh dengan Overlay</title>
+    <style>
+        /* Mengatur halaman menjadi fullscreen */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* WADAH UTAMA - Menjadi acuan posisi */
+        .viewer-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            user-select: none;
+        }
+
+        /* EMBED 1 (LAYER 1 - LATAR BELAKANG) */
+        .embed-utama {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Lapisan bawah */
+        }
+
+        /* EMBED 2 (LAYER 2 - DI ATAS) */
+        .embed-kecil {
+            position: absolute;
+            z-index: 10;      /* Lapisan atas */
+            width: 25%;       /* Ukuran kecil */
+            
+            /* Posisi awal di pojok kanan bawah */
+            bottom: 20px;
+            right: 20px;
+            
+            /* Gaya visual */
+            border: 3px solid white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            cursor: grab;
+        }
+        
+        .embed-kecil.is-dragging {
+            cursor: grabbing;
+        }
+        
+        .viewer-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .embed-kecil iframe {
+             pointer-events: none; /* Penting agar bisa di-drag */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="viewer-container">
+        <div class="embed-utama">
+            <iframe title="Low Poly City" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" src="https://sketchfab.com/models/c5f3bb50fed947e8891b236bc85b4f7d/embed?autostart=1"></iframe>
+        </div>
+        
+        <div class="embed-kecil">
+		<div>
+		<div class ="sketchfab-embed-wrapper"> <iframe title="HONDA CB400SF - Dodo Pizza" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share width="640" height="480" src="https://sketchfab.com/models/b55b21d62a824c81b191bc6f2e59418d/embed?autostart=1&transparent=1"> </iframe> </div>
+       
+    </div>
+
+    <script>
+        const container = document.querySelector('.viewer-container');
+        const embedKecil = document.querySelector('.embed-kecil');
+
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        embedKecil.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            embedKecil.style.right = 'auto';
+            embedKecil.style.bottom = 'auto';
+            offsetX = e.clientX - embedKecil.getBoundingClientRect().left;
+            offsetY = e.clientY - embedKecil.getBoundingClientRect().top;
+            embedKecil.classList.add('is-dragging');
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const containerRect = container.getBoundingClientRect();
+            let newX = e.clientX - containerRect.left - offsetX;
+            let newY = e.clientY - containerRect.top - offsetY;
+
+            if (newX < 0) newX = 0;
+            if (newY < 0) newY = 0;
+            if (newX + embedKecil.offsetWidth > containerRect.width) {
+                newX = containerRect.width - embedKecil.offsetWidth;
+            }
+            if (newY + embedKecil.offsetHeight > containerRect.height) {
+                newY = containerRect.height - embedKecil.offsetHeight;
+            }
+
+            embedKecil.style.left = newX + 'px';
+            embedKecil.style.top = newY + 'px';
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            embedKecil.classList.remove('is-dragging');
+        });
+    </script>
+
+</body>
+</html>
