@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Pembelajaran Scratch Interaktif</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lesson-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .lesson-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+        }
+
+        .lesson-content {
+            display: none;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .lesson-content.active {
+            display: block;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .scratch-block {
+            background: #ff6b35;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 5px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .quiz-container {
+            background: #e3f2fd;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .quiz-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1565c0;
+        }
+
+        .quiz-option {
+            background: white;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-option:hover {
+            background: #f0f8ff;
+            border-color: #2196f3;
+        }
+
+        .quiz-option.correct {
+            background: #4caf50;
+            color: white;
+        }
+
+        .quiz-option.wrong {
+            background: #f44336;
+            color: white;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .interactive-demo {
+            background: #fff3e0;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #ff9800;
+        }
+
+        .demo-canvas {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            width: 100%;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sprite {
+            width: 50px;
+            height: 50px;
+            background: #ff6b35;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50px;
+            transform: translateY(-50%);
+            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .control-panel {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: #1976d2;
+            transform: scale(1.05);
+        }
+
+        .achievement {
+            background: linear-gradient(135deg, #ffd700, #ffb300);
+            color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+
+        .achievement.show {
+            display: block;
+            animation: bounceIn 0.6s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab-btn {
+                width: 200px;
+            }
+            
+            .content-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 Belajar Scratch</h1>
+            <p>Modul Pembelajaran Interaktif Pemrograman Visual</p>
+            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; margin: 20px 0; backdrop-filter: blur(10px);">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <span style="font-size: 1.5rem;">👨‍💻</span>
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.2rem; font-weight: bold; background: linear-gradient(45deg, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                            Dibuat oleh: ERWAN SETIAWAN
+                        </div>
+                        <div style="font-size: 0.9rem; opacity: 0.8; margin-top: 5px;">
+                            ✨ Educator & Developer ✨
+                        </div>
+                    </div>
+                    <span style="font-size: 1.5rem;">🌟</span>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <button id="musicToggle" class="control-btn" onclick="toggleMusic()" style="background: #FF6B35;">
+                    🎵 Musik: ON
+                </button>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('intro')">📚 Pengenalan</button>
+            <button class="tab-btn" onclick="showTab('basics')">🔧 Dasar-dasar</button>
+            <button class="tab-btn" onclick="showTab('tutorial')">👨‍💻 Tutorial</button>
+            <button class="tab-btn" onclick="showTab('practice')">🎯 Latihan</button>
+            <button class="tab-btn" onclick="showTab('quiz')">📝 Kuis</button>
+        </div>
+
+        <!-- Pengenalan Section -->
+        <div id="intro" class="content-section active">
+            <h2>🌟 Apa itu Scratch?</h2>
+            <p>Scratch adalah bahasa pemrograman visual yang dikembangkan oleh MIT untuk membantu anak-anak dan pemula belajar konsep pemrograman dengan cara yang menyenangkan dan interaktif.</p>
+            
+            <div class="grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧩</div>
+                    <h3>Drag & Drop</h3>
+                    <p>Tidak perlu mengetik kode, cukup seret dan lepas blok-blok perintah</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Visual & Kreatif</h3>
+                    <p>Buat animasi, game, dan cerita interaktif dengan mudah</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Komunitas Global</h3>
+                    <p>Bagikan karya dan belajar dari jutaan pengguna di seluruh dunia</p>
+                </div>
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🎮 Demo Interaktif: Kendalikan Sprite</h3>
+                <div class="demo-canvas" id="demoCanvas">
+                    <div class="sprite" id="demoSprite">🐱</div>
+                </div>
+                <div class="control-panel">
+                    <button class="control-btn" onclick="moveSprite('left')">← Kiri</button>
+                    <button class="control-btn" onclick="moveSprite('right')">Kanan →</button>
+                    <button class="control-btn" onclick="moveSprite('up')">↑ Atas</button>
+                    <button class="control-btn" onclick="moveSprite('down')">↓ Bawah</button>
+                    <button class="control-btn" onclick="changeSprite()">🔄 Ganti Sprite</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dasar-dasar Section -->
+        <div id="basics" class="content-section">
+            <h2>🔧 Konsep Dasar Scratch</h2>
+            
+            <div class="lesson-card" onclick="toggleLesson('sprites')">
+                <h3>1. Sprites (Karakter)</h3>
+                <p>Objek yang dapat bergerak dan berinteraksi dalam program</p>
+                <div class="lesson-content" id="sprites">
+                    <p><strong>Sprite</strong> adalah karakter atau objek utama dalam Scratch. Setiap sprite memiliki:</p>
+                    <ul>
+                        <li>🎭 <strong>Kostum:</strong> Tampilan visual sprite</li>
+                        <li>🔊 <strong>Suara:</strong> Audio yang dapat dimainkan</li>
+                        <li>📜 <strong>Script:</strong> Kumpulan blok perintah</li>
+                    </ul>
+                    <!-- Area Embed Gambar Sprite -->
+                    <div style="background: #f0f8ff; padding: 20px; border-radius: 15px; margin: 20px 0; border: 3px dashed #4C97FF; box-shadow: 0 4px 12px rgba(76, 151, 255, 0.1);">
+                        <h4 style="color: #4C97FF; margin-top: 0; font-size: 1.3rem; display: flex; align-items: center; gap: 10px;">
+                            📸 <span>Area Embed Gambar: Sprite dalam Scratch</span>
+                        </h4>
+                        <div style="background: white; height: 280px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 2px solid #e0e7ff; position: relative; overflow: hidden;">
+                            <!-- Placeholder untuk embed gambar sprite -->
+                            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative;">
+                                <div style="text-align: center; color: #64748b; z-index: 2;">
+                                    <div style="font-size: 4rem; margin-bottom: 15px; opacity: 0.7;">🐱</div>
+                                    <div style="background: rgba(255,255,255,0.9); padding: 15px; border-radius: 10px; border: 1px solid #cbd5e1;">
+                                        <p style="margin: 0; font-weight: bold; color: #1e293b; font-size: 1.1rem;">📌 EMBED GAMBAR DI SINI</p>
+                                        <p style="margin: 8px 0 0 0; font-size: 0.95rem; line-height: 1.4;">
+                                            <strong>Contoh gambar yang cocok:</strong><br>
+                                            • Screenshot sprite kucing Scratch<br>
+                                            • Berbagai kostum sprite<br>
+                                            • Interface sprite editor<br>
+                                            • Galeri sprite library
+                                        </p>
+                                        <div style="background: #4C97FF; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block; margin-top: 8px; font-size: 0.85rem;">
+                                            📏 Ukuran optimal: 450×250px
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Decorative elements -->
+                                <div style="position: absolute; top: 20px; right: 20px; font-size: 2rem; opacity: 0.3;">🎭</div>
+                                <div style="position: absolute; bottom: 20px; left: 20px; font-size: 1.5rem; opacity: 0.3;">✨</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; padding: 12px; background: rgba(76, 151, 255, 0.1); border-radius: 8px; border-left: 4px solid #4C97FF;">
+                            <p style="margin: 0; font-size: 0.9rem; color: #1e40af;">
+                                <strong>💡 Tips:</strong> Gambar sprite akan membantu siswa memahami konsep karakter dan kostum dalam Scratch dengan lebih visual dan menarik.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        Contoh Sprite: Kucing (Cat), Bola, Mobil, Karakter sendiri
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-card" onclick="toggleLesson('blocks')">
+                <h3>2. Blok Perintah</h3>
+                <p>Puzzle pieces yang berisi instruksi untuk sprite</p>
+                <div class="lesson-content" id="blocks">
+                    <p>Blok perintah dibagi menjadi beberapa kategori:</p>
+                    <div style="margin: 15px 0;">
+                        <span class="scratch-block" style="background: #4C97FF;">Gerak</span>
+                        <span class="scratch-block" style="background: #9966FF;">Tampilan</span>
+                        <span class="scratch-block" style="background: #CF63CF;">Suara</span>
+                        <span class="scratch-block" style="background: #FFBF00;">Peristiwa</span>
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <span class="scratch-block" style="background: #FF8C1A;">Kontrol</span>
+                        <span class="scratch-block" style="background: #5CB3D6;">Sensor</span>
+                        <span class="scratch-block" style="background: #FF6680;">Operator</span>
+                        <span class="scratch-block" style="background: #FF8000;">Variabel</span>
+                    </div>
+                    <!-- Area Embed Gambar Blok Perintah -->
+                    <div style="background: #f3f0ff; padding: 20px; border-radius: 15px; margin: 20px 0; border: 3px dashed #9966FF; box-shadow: 0 4px 12px rgba(153, 102, 255, 0.1);">
+                        <h4 style="color: #9966FF; margin-top: 0; font-size: 1.3rem; display: flex; align-items: center; gap: 10px;">
+                            🧩 <span>Area Embed Gambar: Blok Perintah Scratch</span>
+                        </h4>
+                        <div style="background: white; height: 260px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 2px solid #e9e5ff; position: relative; overflow: hidden;">
+                            <!-- Placeholder untuk embed gambar blok -->
+                            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #faf9ff 0%, #f0ebff 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative;">
+                                <div style="text-align: center; color: #6b46c1; z-index: 2;">
+                                    <div style="font-size: 3.5rem; margin-bottom: 15px; opacity: 0.7;">🧩</div>
+                                    <div style="background: rgba(255,255,255,0.95); padding: 15px; border-radius: 10px; border: 1px solid #d8b4fe;">
+                                        <p style="margin: 0; font-weight: bold; color: #581c87; font-size: 1.1rem;">📌 EMBED GAMBAR DI SINI</p>
+                                        <p style="margin: 8px 0 0 0; font-size: 0.95rem; line-height: 1.4;">
+                                            <strong>Contoh gambar yang cocok:</strong><br>
+                                            • Screenshot blok-blok tersusun<br>
+                                            • Palette blok dengan kategori warna<br>
+                                            • Contoh: "gerak 10 langkah", "putar 15°"<br>
+                                            • Interface drag & drop blok
+                                        </p>
+                                        <div style="background: #9966FF; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block; margin-top: 8px; font-size: 0.85rem;">
+                                            📏 Ukuran optimal: 480×220px
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Decorative puzzle pieces -->
+                                <div style="position: absolute; top: 15px; right: 25px; font-size: 1.8rem; opacity: 0.3; transform: rotate(15deg);">🔧</div>
+                                <div style="position: absolute; bottom: 15px; left: 25px; font-size: 1.5rem; opacity: 0.3; transform: rotate(-10deg);">⚙️</div>
+                                <div style="position: absolute; top: 50%; right: 15px; font-size: 1.2rem; opacity: 0.2;">🎯</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; padding: 12px; background: rgba(153, 102, 255, 0.1); border-radius: 8px; border-left: 4px solid #9966FF;">
+                            <p style="margin: 0; font-size: 0.9rem; color: #6b21a8;">
+                                <strong>💡 Tips:</strong> Gambar blok perintah akan menunjukkan bagaimana cara menyusun instruksi dalam Scratch dengan sistem drag & drop yang mudah.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-card" onclick="toggleLesson('stage')">
+                <h3>3. Stage (Panggung)</h3>
+                <p>Area tempat sprite bergerak dan berinteraksi</p>
+                <div class="lesson-content" id="stage">
+                    <p><strong>Stage</strong> adalah latar belakang tempat semua aksi terjadi:</p>
+                    <ul>
+                        <li>📏 Ukuran: 480 x 360 pixel</li>
+                        <li>📍 Koordinat: X (-240 hingga 240), Y (-180 hingga 180)</li>
+                        <li>🖼️ Dapat memiliki berbagai latar belakang</li>
+                        <li>📜 Dapat memiliki script sendiri</li>
+                    </ul>
+                    <!-- Area Embed Gambar Interface Stage -->
+                    <div style="background: #fff8f0; padding: 20px; border-radius: 15px; margin: 20px 0; border: 3px dashed #FF8C1A; box-shadow: 0 4px 12px rgba(255, 140, 26, 0.1);">
+                        <h4 style="color: #FF8C1A; margin-top: 0; font-size: 1.3rem; display: flex; align-items: center; gap: 10px;">
+                            🎭 <span>Area Embed Gambar: Interface Stage Scratch</span>
+                        </h4>
+                        <div style="background: white; height: 300px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 2px solid #fed7aa; position: relative; overflow: hidden;">
+                            <!-- Placeholder untuk embed gambar stage -->
+                            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #fffbf5 0%, #fef3e2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative;">
+                                <div style="text-align: center; color: #c2410c; z-index: 2;">
+                                    <div style="font-size: 4rem; margin-bottom: 15px; opacity: 0.7;">🎭</div>
+                                    <div style="background: rgba(255,255,255,0.95); padding: 18px; border-radius: 12px; border: 1px solid #fdba74; max-width: 90%;">
+                                        <p style="margin: 0; font-weight: bold; color: #9a3412; font-size: 1.1rem;">📌 EMBED GAMBAR DI SINI</p>
+                                        <p style="margin: 10px 0 0 0; font-size: 0.95rem; line-height: 1.5;">
+                                            <strong>Screenshot interface lengkap dengan:</strong><br>
+                                            🎯 Area stage (panggung) 480×360px<br>
+                                            📍 Sistem koordinat X,Y (-240 hingga +240)<br>
+                                            🎪 Sprite list di bawah stage<br>
+                                            📜 Area script blocks di sebelah kanan<br>
+                                            🎨 Palette blok kategori warna-warni
+                                        </p>
+                                        <div style="background: #FF8C1A; color: white; padding: 6px 12px; border-radius: 15px; display: inline-block; margin-top: 10px; font-size: 0.85rem;">
+                                            📏 Ukuran optimal: 550×280px
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Decorative stage elements -->
+                                <div style="position: absolute; top: 20px; left: 20px; font-size: 2rem; opacity: 0.3;">🎪</div>
+                                <div style="position: absolute; top: 20px; right: 20px; font-size: 1.8rem; opacity: 0.3;">📐</div>
+                                <div style="position: absolute; bottom: 20px; right: 20px; font-size: 1.5rem; opacity: 0.3;">🎬</div>
+                                <div style="position: absolute; bottom: 20px; left: 20px; font-size: 1.3rem; opacity: 0.3;">⭐</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; padding: 12px; background: rgba(255, 140, 26, 0.1); border-radius: 8px; border-left: 4px solid #FF8C1A;">
+                            <p style="margin: 0; font-size: 0.9rem; color: #c2410c;">
+                                <strong>💡 Tips:</strong> Gambar interface stage akan membantu siswa memahami tata letak workspace Scratch dan bagaimana semua komponen bekerja bersama dalam satu layar.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tutorial Section -->
+        <div id="tutorial" class="content-section">
+            <h2>👨‍💻 Tutorial Langkah demi Langkah</h2>
+            
+            <div class="lesson-card" onclick="toggleLesson('project1')">
+                <h3>🎯 Proyek 1: Membuat Sprite Bergerak</h3>
+                <p>Belajar menggerakkan sprite dengan tombol panah</p>
+                <div class="lesson-content" id="project1">
+                    <h4>Langkah-langkah:</h4>
+                    <ol>
+                        <li>Buka Scratch dan pilih sprite kucing</li>
+                        <li>Dari kategori <span class="scratch-block" style="background: #FFBF00;">Peristiwa</span>, seret blok "ketika tombol panah kanan ditekan"</li>
+                        <li>Dari kategori <span class="scratch-block" style="background: #4C97FF;">Gerak</span>, seret blok "ubah x sebesar 10"</li>
+                        <li>Hubungkan kedua blok tersebut</li>
+                        <li>Ulangi untuk tombol panah lain (kiri: -10, atas: y+10, bawah: y-10)</li>
+                    </ol>
+                    <div class="interactive-demo">
+                        <p><strong>💡 Tips:</strong> Tekan tombol panah pada keyboard untuk menggerakkan sprite!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-card" onclick="toggleLesson('project2')">
+                <h3>🌈 Proyek 2: Animasi Warna</h3>
+                <p>Membuat sprite yang berubah warna secara otomatis</p>
+                <div class="lesson-content" id="project2">
+                    <h4>Langkah-langkah:</h4>
+                    <ol>
+                        <li>Pilih sprite dan tambahkan blok "ketika bendera hijau diklik"</li>
+                        <li>Tambahkan blok "ulangi selamanya" dari kategori <span class="scratch-block" style="background: #FF8C1A;">Kontrol</span></li>
+                        <li>Di dalam loop, tambahkan "ubah efek warna sebesar 25"</li>
+                        <li>Tambahkan "tunggu 0.1 detik"</li>
+                        <li>Klik bendera hijau untuk melihat hasilnya!</li>
+                    </ol>
+                    <div class="code-block">
+                        ketika bendera hijau diklik
+                        ulangi selamanya
+                            ubah efek warna sebesar 25
+                            tunggu 0.1 detik
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-card" onclick="toggleLesson('project3')">
+                <h3>🎮 Proyek 3: Game Sederhana</h3>
+                <p>Membuat game menangkap bola yang jatuh</p>
+                <div class="lesson-content" id="project3">
+                    <h4>Yang dibutuhkan:</h4>
+                    <ul>
+                        <li>Sprite pemain (bisa kucing atau karakter lain)</li>
+                        <li>Sprite bola</li>
+                        <li>Variabel "skor"</li>
+                    </ul>
+                    <h4>Script untuk Pemain:</h4>
+                    <div class="code-block">
+                        ketika bendera hijau diklik
+                        ulangi selamanya
+                            jika tombol panah kanan ditekan maka
+                                ubah x sebesar 10
+                            jika tombol panah kiri ditekan maka
+                                ubah x sebesar -10
+                    </div>
+                    <h4>Script untuk Bola:</h4>
+                    <div class="code-block">
+                        ketika bendera hijau diklik
+                        ulangi selamanya
+                            pergi ke x: bilangan acak -200 hingga 200 y: 180
+                            ulangi hingga menyentuh tepi
+                                ubah y sebesar -5
+                                jika menyentuh [Pemain] maka
+                                    ubah [skor] sebesar 1
+                                    pergi ke x: bilangan acak -200 hingga 200 y: 180
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Latihan Section -->
+        <div id="practice" class="content-section">
+            <h2>🎯 Latihan Praktis</h2>
+            
+            <div class="quiz-container">
+                <h3>🏃‍♂️ Latihan 1: Sprite Marathon</h3>
+                <p><strong>Tantangan:</strong> Buat sprite yang berlari melintasi layar dan kembali ke posisi awal!</p>
+                <div class="interactive-demo">
+                    <h4>Petunjuk:</h4>
+                    <ul>
+                        <li>Gunakan blok "meluncur dalam ... detik ke x: ... y: ..."</li>
+                        <li>Buat loop untuk mengulang gerakan</li>
+                        <li>Tambahkan efek suara saat berlari</li>
+                    </ul>
+                    <button class="control-btn" onclick="showHint(1)">💡 Lihat Petunjuk</button>
+                    <div id="hint1" style="display: none; margin-top: 15px; padding: 15px; background: #e8f5e8; border-radius: 10px;">
+                        <strong>Solusi:</strong><br>
+                        1. ketika bendera hijau diklik<br>
+                        2. ulangi selamanya<br>
+                        3. meluncur dalam 2 detik ke x: 200 y: 0<br>
+                        4. meluncur dalam 2 detik ke x: -200 y: 0
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h3>🎨 Latihan 2: Kuas Ajaib</h3>
+                <p><strong>Tantangan:</strong> Buat sprite yang menggambar jejak warna-warni saat bergerak!</p>
+                <div class="interactive-demo">
+                    <h4>Petunjuk:</h4>
+                    <ul>
+                        <li>Gunakan blok "turunkan pena"</li>
+                        <li>Ubah warna pena secara acak</li>
+                        <li>Gerakkan sprite mengikuti mouse</li>
+                    </ul>
+                    <button class="control-btn" onclick="showHint(2)">💡 Lihat Petunjuk</button>
+                    <div id="hint2" style="display: none; margin-top: 15px; padding: 15px; background: #e8f5e8; border-radius: 10px;">
+                        <strong>Solusi:</strong><br>
+                        1. ketika bendera hijau diklik<br>
+                        2. turunkan pena<br>
+                        3. ulangi selamanya<br>
+                        4. pergi ke posisi mouse<br>
+                        5. ubah warna pena sebesar bilangan acak 1 hingga 100
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h3>🎵 Latihan 3: Piano Virtual</h3>
+                <p><strong>Tantangan:</strong> Buat piano sederhana yang memainkan nada berbeda saat tombol ditekan!</p>
+                <div class="interactive-demo">
+                    <h4>Tombol yang digunakan:</h4>
+                    <div style="display: flex; gap: 10px; margin: 15px 0; flex-wrap: wrap;">
+                        <span class="scratch-block">A = Do</span>
+                        <span class="scratch-block">S = Re</span>
+                        <span class="scratch-block">D = Mi</span>
+                        <span class="scratch-block">F = Fa</span>
+                        <span class="scratch-block">G = Sol</span>
+                    </div>
+                    <button class="control-btn" onclick="showHint(3)">💡 Lihat Petunjuk</button>
+                    <div id="hint3" style="display: none; margin-top: 15px; padding: 15px; background: #e8f5e8; border-radius: 10px;">
+                        <strong>Solusi:</strong><br>
+                        1. ketika tombol a ditekan<br>
+                        2. mainkan nada 60 selama 0.5 ketukan<br>
+                        (Ulangi untuk tombol lain dengan nada 62, 64, 65, 67)
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="color: #FF8C1A; margin-top: 40px;">🔥 Latihan Tingkat Sedang</h2>
+
+            <div class="quiz-container" style="background: #fff3e0;">
+                <h3>🎯 Latihan 4: Kalkulator Sederhana</h3>
+                <p><strong>Tantangan:</strong> Buat kalkulator yang bisa menjumlahkan dua angka!</p>
+                <div class="interactive-demo">
+                    <h4>Fitur yang harus ada:</h4>
+                    <ul>
+                        <li>Input untuk angka pertama dan kedua</li>
+                        <li>Tombol untuk operasi (+, -, ×, ÷)</li>
+                        <li>Tampilkan hasil perhitungan</li>
+                        <li>Tombol reset untuk menghapus semua</li>
+                    </ul>
+                    <button class="control-btn" onclick="showHint(4)">💡 Lihat Petunjuk</button>
+                    <div id="hint4" style="display: none; margin-top: 15px; padding: 15px; background: #e8f5e8; border-radius: 10px;">
+                        <strong>Solusi:</strong><br>
+                        1. Buat variabel: angka1, angka2, hasil<br>
+                        2. ketika sprite diklik → tanya "Masukkan angka pertama"<br>
+                        3. ubah [angka1] menjadi (jawaban)<br>
+                        4. tanya "Masukkan angka kedua"<br>
+                        5. ubah [angka2] menjadi (jawaban)<br>
+                        6. ubah [hasil] menjadi ((angka1) + (angka2))<br>
+                        7. katakan (gabungkan "Hasil: " (hasil))
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container" style="background: #fff3e0;">
+                <h3>🌡️ Latihan 5: Termometer Digital</h3>
+                <p><strong>Tantangan:</strong> Buat termometer yang mengubah warna berdasarkan suhu!</p>
+                <div class="interactive-demo">
+                    <h4>Aturan warna:</h4>
+                    <ul>
+                        <li>Biru: Suhu < 10°C (Dingin)</li>
+                        <li>Hijau: Suhu 10-25°C (Sejuk)</li>
+                        <li>Kuning: Suhu 26-35°C (Hangat)</li>
+                        <li>Merah: Suhu > 35°C (Panas)</li>
+                    </ul>
+                    <button class="control-btn" onclick="showHint(5)">💡 Lihat Petunjuk</button>
+                    <div id="hint5" style="display: none; margin-top: 15px; padding: 15px; background: #e8f5e8; border-radius: 10px;">
+                        <strong>Solusi:</strong><br>
+                        1. Buat variabel: suhu<br>
+                        2. ketika bendera hijau diklik<br>
+                        3. ulangi selamanya<br>
+                        4. tanya "Masukkan suhu (°C)"<br>
+                        5. ubah [suhu] menjadi (jawaban)<br>
+                        6. jika (suhu) < (10) maka → ubah efek warna menjadi biru<br>
+                        7. jika tidak, jika (suhu) < (26) maka → ubah efek warna menjadi hijau<br>
+                        8. dst...
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="color: #E91E63; margin-top: 40px;">🚀 Latihan Tingkat Sulit</h2>
+
+            <div class="quiz-container" style="background: #fce4ec;">
+                <h3>🎮 Latihan 6: Game Tebak Angka</h3>
+                <p><strong>Tantangan:</strong> Buat game tebak angka dengan sistem skor dan nyawa!</p>
+                <div class="interactive-demo">
+                    <h4>Fitur yang harus ada:</h4>
+                    <ul>
+                        <li>Angka acak 1-100 yang harus ditebak</li>
+                        <li>Petunjuk "Terlalu besar" atau "Terlalu kecil"</li>
+                        <li>Sistem nyawa (3 kesempatan salah)</li>
+                        <li>Skor berdasarkan jumlah tebakan</li>
+                        <li>Opsi main lagi setelah game over</li>
+                    </ul>
+                    <button class="control-btn" onclick="showHint(6)">💡 Lihat Petunjuk</button>
+                    <div id="hint6" style="display: none; margin-top: 15px; padding: 15px; background: #e8f5e8; border-radius: 10px;">
+                        <strong>Solusi:</strong><br>
+                        1. Buat variabel: angka_rahasia, tebakan, nyawa, skor<br>
+                        2. ketika bendera hijau diklik<br>
+                        3. ubah [angka_rahasia] menjadi (bilangan acak 1 hingga 100)<br>
+                        4. ubah [nyawa] menjadi (3)<br>
+                        5. ubah [skor] menjadi (100)<br>
+                        6. ulangi hingga ((tebakan) = (angka_rahasia)) atau ((nyawa) = (0))<br>
+                        7. tanya "Tebak angka 1-100"<br>
+                        8. jika (jawaban) > (angka_rahasia) → katakan "Terlalu besar!"<br>
+                        9. jika (jawaban) < (angka_rahasia) → katakan "Terlalu kecil!"<br>
+                        10. kurangi nyawa dan skor setiap tebakan salah
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container" style="background: #fce4ec;">
+                <h3>🎨 Latihan 7: Animasi Spiral Warna-warni</h3>
+                <p><strong>Tantangan:</strong> Buat animasi spiral yang berubah warna dengan matematika!</p>
+                <div class="interactive-demo">
+                    <h4>Spesifikasi:</h4>
+                    <ul>
+                        <li>Gunakan loop untuk menggambar spiral</li>
+                        <li>Warna berubah setiap 10 derajat</li>
+                        <li>Ukuran garis bertambah secara bertahap</li>
+                        <li>Sprite berputar sambil menggambar</li>
+                        <li>Bersihkan layar dan mulai lagi setelah selesai</li>
+                    </ul>
+                    <button class="control-btn" onclick="showHint(7)">💡 Lihat Petunjuk</button>
+                    <div id="hint7" style="display: none; margin-top: 15px; padding: 15px; background: #e8f5e8; border-radius: 10px;">
+                        <strong>Solusi:</strong><br>
+                        1. Buat variabel: sudut, jarak<br>
+                        2. ketika bendera hijau diklik<br>
+                        3. hapus semua<br>
+                        4. turunkan pena<br>
+                        5. ubah [sudut] menjadi (0)<br>
+                        6. ubah [jarak] menjadi (1)<br>
+                        7. ulangi (360) kali<br>
+                        8. putar searah jarum jam (sudut) derajat<br>
+                        9. maju (jarak) langkah<br>
+                        10. ubah [sudut] sebesar (1)<br>
+                        11. ubah [jarak] sebesar (0.5)<br>
+                        12. ubah warna pena sebesar (5)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kuis Section -->
+        <div id="quiz" class="content-section">
+            <h2>📝 Kuis Pemahaman (30 Soal)</h2>
+            
+            <div style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; padding: 20px; border-radius: 15px; margin-bottom: 30px; text-align: center;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                    <div>
+                        <h3 style="margin: 0; font-size: 1.5rem;">🏆 Skor Anda</h3>
+                        <div id="currentScore" style="font-size: 2.5rem; font-weight: bold; margin: 10px 0;">0</div>
+                        <div style="font-size: 1rem; opacity: 0.9;">dari <span id="maxPossibleScore">3000</span> poin</div>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0;">📊 Progress</h4>
+                        <div id="questionsAnswered" style="font-size: 1.2rem; margin: 5px 0;">0/30 soal</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9;">Jawaban benar: <span id="correctAnswers">0</span></div>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0;">⭐ Sistem Poin</h4>
+                        <div style="font-size: 0.9rem; line-height: 1.4;">
+                            ✅ Jawaban Benar: +100 poin<br>
+                            ❌ Jawaban Salah: +0 poin
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">1. Apa yang dimaksud dengan Sprite dalam Scratch?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Latar belakang program</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Karakter atau objek yang dapat bergerak</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Blok perintah</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Area kerja Scratch</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. File suara dalam program</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">2. Blok perintah mana yang digunakan untuk menggerakkan sprite?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">A. Blok Gerak (Motion)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">B. Blok Suara (Sound)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Blok Tampilan (Looks)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Blok Operator</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Blok Variabel</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">3. Ukuran Stage dalam Scratch adalah?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. 360 x 480 pixel</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. 480 x 360 pixel</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. 500 x 400 pixel</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. 400 x 300 pixel</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. 640 x 480 pixel</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">4. Blok "ulangi selamanya" termasuk dalam kategori?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Peristiwa (Events)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Kontrol (Control)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Sensor (Sensing)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Gerak (Motion)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Tampilan (Looks)</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">5. Untuk memulai program Scratch, kita menggunakan blok?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">A. Ketika bendera hijau diklik</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">B. Ketika sprite diklik</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Ulangi selamanya</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Tunggu 1 detik</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Ketika tombol ditekan</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">6. Koordinat tengah Stage adalah?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">A. (0, 0)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">B. (240, 180)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. (-240, -180)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. (480, 360)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. (1, 1)</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">7. Warna blok kategori "Gerak" adalah?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">A. Biru</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">B. Ungu</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Hijau</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Kuning</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Merah</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">8. Blok "katakan" termasuk dalam kategori?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Gerak</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Tampilan</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Suara</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Kontrol</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Sensor</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">9. Untuk membuat sprite berputar, kita gunakan blok?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Maju 10 langkah</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Putar searah jarum jam 15 derajat</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Pergi ke x:0 y:0</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Ubah x sebesar 10</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Hadap ke arah 90</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">10. Variabel dalam Scratch digunakan untuk?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Menggerakkan sprite</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">B. Memainkan suara</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">C. Menyimpan data atau nilai</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Mengubah kostum</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Mendeteksi sentuhan</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">11. Blok "jika...maka" termasuk dalam kategori?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Operator</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Kontrol</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Sensor</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Peristiwa</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Gerak</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">12. Untuk mendeteksi apakah sprite menyentuh tepi, kita gunakan?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Blok Gerak</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">B. Blok Tampilan</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">C. Blok Sensor</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Blok Kontrol</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Blok Operator</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">13. Kostum sprite adalah?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">A. Tampilan visual sprite</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">B. Suara yang dimainkan sprite</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Script yang dimiliki sprite</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Posisi sprite di stage</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Kecepatan gerak sprite</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">14. Blok "tunggu 1 detik" berfungsi untuk?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Menghentikan program</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Memberikan jeda waktu</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Mengulang perintah</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Menggerakkan sprite</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Mengubah warna</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">15. Untuk membuat sprite menghilang, kita gunakan blok?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Pergi ke x:0 y:0</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Sembunyi</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Ubah ukuran menjadi 0%</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Hentikan semua</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Hapus klon ini</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">16. Operator "dan" dalam Scratch berfungsi untuk?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Menjumlahkan dua angka</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Menggabungkan dua kondisi</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Mengurangi dua angka</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Membagi dua angka</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Mengalikan dua angka</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">17. Blok "mainkan suara" termasuk dalam kategori?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Tampilan</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Suara</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Peristiwa</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Kontrol</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Gerak</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">18. Untuk membuat klon sprite, kita gunakan blok?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Duplikasi sprite</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Buat klon dari diriku</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Salin sprite</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Gandakan objek</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Tambah sprite baru</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">19. Blok "bilangan acak" menghasilkan?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">A. Angka random dalam rentang tertentu</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">B. Angka yang selalu sama</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Angka negatif saja</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Angka positif saja</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Angka genap saja</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">20. Untuk mengubah latar belakang stage, kita klik?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Area sprite</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Area stage</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Menu file</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Toolbar</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Panel blok</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">21. Blok "tanya" dan "jawaban" digunakan untuk?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">A. Interaksi dengan pengguna</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">B. Menggerakkan sprite</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Memainkan suara</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Mengubah kostum</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Mendeteksi sentuhan</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">22. Efek grafis pada sprite dapat diubah menggunakan blok?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Ubah kostum</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Ubah efek warna</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Ubah ukuran</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Putar sprite</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Pindah posisi</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">23. Untuk menghentikan semua script, kita gunakan blok?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Tunggu selamanya</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Hentikan semua</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Pause program</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Keluar dari loop</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Reset program</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">24. Blok "gabungkan" digunakan untuk?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">A. Menggabungkan teks atau angka</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">B. Menggabungkan sprite</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Menggabungkan suara</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Menggabungkan kostum</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Menggabungkan latar belakang</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">25. Untuk membuat sprite mengikuti mouse, kita gunakan?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Pergi ke posisi acak</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Pergi ke posisi mouse</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Hadap ke arah mouse</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Maju ke mouse</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Ikuti sprite lain</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">26. Blok "ulangi 10 kali" termasuk dalam kategori?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Operator</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Kontrol</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Gerak</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Peristiwa</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Sensor</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">27. Untuk mendeteksi apakah tombol spasi ditekan, kita gunakan?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Ketika sprite diklik</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Tombol spasi ditekan?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Ketika bendera diklik</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Mouse diklik?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Sprite disentuh?</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">28. Blok "turunkan pena" digunakan untuk?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Menulis teks</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">B. Menggambar jejak saat sprite bergerak</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Mengubah warna sprite</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Memindahkan sprite</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Memutar sprite</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">29. Untuk mengatur kecepatan animasi, kita gunakan blok?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">A. Tunggu ... detik</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">B. Ubah kecepatan</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">C. Percepat animasi</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Atur tempo</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Kontrol waktu</div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">30. Scratch dikembangkan oleh?</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">A. Google</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">B. Microsoft</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">C. MIT (Massachusetts Institute of Technology)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">D. Apple</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">E. Facebook</div>
+            </div>
+
+            <div class="achievement" id="quizComplete">
+                🏆 Selamat! Anda telah menyelesaikan kuis dengan baik!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 'intro';
+        let progress = 0;
+        let quizScore = 0;
+        let totalQuestions = 30;
+        let questionsAnswered = 0;
+        let currentPoints = 0;
+        let pointsPerQuestion = 100;
+        let spritePosition = { x: 50, y: 50 };
+        let sprites = ['🐱', '🐶', '🐸', '🦄', '🚀', '⚽'];
+        let currentSpriteIndex = 0;
+        let musicEnabled = true;
+        let audioContext;
+        let musicInterval;
+
+        function showTab(tabName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            currentTab = tabName;
+            updateProgress();
+        }
+
+        function toggleLesson(lessonId) {
+            const lesson = document.getElementById(lessonId);
+            lesson.classList.toggle('active');
+        }
+
+        function updateProgress() {
+            const tabs = ['intro', 'basics', 'tutorial', 'practice', 'quiz'];
+            const currentIndex = tabs.indexOf(currentTab);
+            progress = ((currentIndex + 1) / tabs.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function moveSprite(direction) {
+            const sprite = document.getElementById('demoSprite');
+            const canvas = document.getElementById('demoCanvas');
+            const canvasRect = canvas.getBoundingClientRect();
+            
+            switch(direction) {
+                case 'left':
+                    spritePosition.x = Math.max(0, spritePosition.x - 50);
+                    break;
+                case 'right':
+                    spritePosition.x = Math.min(canvasRect.width - 50, spritePosition.x + 50);
+                    break;
+                case 'up':
+                    spritePosition.y = Math.max(0, spritePosition.y - 50);
+                    break;
+                case 'down':
+                    spritePosition.y = Math.min(canvasRect.height - 50, spritePosition.y + 50);
+                    break;
+            }
+            
+            sprite.style.left = spritePosition.x + 'px';
+            sprite.style.top = spritePosition.y + 'px';
+        }
+
+        function changeSprite() {
+            currentSpriteIndex = (currentSpriteIndex + 1) % sprites.length;
+            document.getElementById('demoSprite').textContent = sprites[currentSpriteIndex];
+        }
+
+        function checkAnswer(element, isCorrect) {
+            // Disable all options in this quiz
+            const quizContainer = element.parentElement;
+            const options = quizContainer.querySelectorAll('.quiz-option');
+            
+            // Check if this question was already answered
+            let alreadyAnswered = false;
+            options.forEach(option => {
+                if (option.classList.contains('correct') || option.classList.contains('wrong')) {
+                    alreadyAnswered = true;
+                }
+            });
+            
+            if (alreadyAnswered) return; // Prevent multiple answers
+            
+            options.forEach(option => {
+                option.style.pointerEvents = 'none';
+                if (option === element) {
+                    if (isCorrect) {
+                        option.classList.add('correct');
+                        quizScore++;
+                        currentPoints += pointsPerQuestion;
+                        showScoreAnimation('+' + pointsPerQuestion);
+                    } else {
+                        option.classList.add('wrong');
+                        showScoreAnimation('+0');
+                    }
+                } else if (option.onclick.toString().includes('true')) {
+                    option.classList.add('correct');
+                }
+            });
+
+            questionsAnswered++;
+            updateScoreDisplay();
+
+            // Check if all questions are answered
+            setTimeout(() => {
+                if (questionsAnswered >= totalQuestions) {
+                    showQuizResult();
+                }
+            }, 500);
+        }
+
+        function updateScoreDisplay() {
+            document.getElementById('currentScore').textContent = currentPoints;
+            document.getElementById('questionsAnswered').textContent = questionsAnswered + '/30 soal';
+            document.getElementById('correctAnswers').textContent = quizScore;
+        }
+
+        function showScoreAnimation(points) {
+            const scoreElement = document.getElementById('currentScore');
+            const animation = document.createElement('div');
+            animation.textContent = points;
+            animation.style.cssText = `
+                position: absolute;
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: ${points === '+0' ? '#ff4444' : '#4CAF50'};
+                animation: scoreFloat 2s ease-out forwards;
+                pointer-events: none;
+                z-index: 1000;
+            `;
+            
+            // Add CSS animation if not exists
+            if (!document.getElementById('scoreAnimation')) {
+                const style = document.createElement('style');
+                style.id = 'scoreAnimation';
+                style.textContent = `
+                    @keyframes scoreFloat {
+                        0% { transform: translateY(0) scale(1); opacity: 1; }
+                        50% { transform: translateY(-30px) scale(1.2); opacity: 1; }
+                        100% { transform: translateY(-60px) scale(1); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            scoreElement.parentElement.style.position = 'relative';
+            scoreElement.parentElement.appendChild(animation);
+            
+            setTimeout(() => {
+                animation.remove();
+            }, 2000);
+        }
+
+        function showQuizResult() {
+            const achievement = document.getElementById('quizComplete');
+            const percentage = Math.round((quizScore/totalQuestions)*100);
+            
+            achievement.innerHTML = `
+                🏆 <strong>Kuis Selesai!</strong><br>
+                📊 Skor: ${currentPoints} poin (${quizScore}/${totalQuestions} benar)<br>
+                📈 Persentase: ${percentage}%
+            `;
+            achievement.classList.add('show');
+            
+            // Add grade and message based on score
+            let grade = '';
+            let message = '';
+            
+            if (percentage >= 90) {
+                grade = '🌟 Grade: A+ (Luar Biasa!)';
+                message = 'Sempurna! Anda menguasai dasar-dasar Scratch dengan sangat baik!';
+            } else if (percentage >= 80) {
+                grade = '⭐ Grade: A (Sangat Baik)';
+                message = 'Excellent! Pemahaman Anda tentang Scratch sangat bagus!';
+            } else if (percentage >= 70) {
+                grade = '🎯 Grade: B (Baik)';
+                message = 'Bagus! Anda memahami sebagian besar konsep Scratch!';
+            } else if (percentage >= 60) {
+                grade = '📚 Grade: C (Cukup)';
+                message = 'Cukup baik! Pelajari lagi materi yang masih kurang dipahami!';
+            } else {
+                grade = '💪 Grade: D (Perlu Belajar Lagi)';
+                message = 'Jangan menyerah! Pelajari materi lagi dan ulangi kuis untuk hasil yang lebih baik!';
+            }
+            
+            achievement.innerHTML += `<br><br>${grade}<br>${message}`;
+            
+            // Add reset button
+            achievement.innerHTML += `<br><br><button onclick="resetQuiz()" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold; margin-top: 10px;">🔄 Ulangi Kuis</button>`;
+        }
+
+        function resetQuiz() {
+            // Reset all variables
+            quizScore = 0;
+            questionsAnswered = 0;
+            currentPoints = 0;
+            
+            // Reset all quiz options
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.classList.remove('correct', 'wrong');
+                option.style.pointerEvents = 'auto';
+            });
+            
+            // Hide achievement
+            document.getElementById('quizComplete').classList.remove('show');
+            
+            // Update display
+            updateScoreDisplay();
+            
+            // Scroll to top of quiz section
+            document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showHint(hintNumber) {
+            const hint = document.getElementById('hint' + hintNumber);
+            hint.style.display = hint.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function toggleMusic() {
+            musicEnabled = !musicEnabled;
+            const button = document.getElementById('musicToggle');
+            
+            if (musicEnabled) {
+                button.textContent = '🎵 Musik: ON';
+                button.style.background = '#FF6B35';
+                startBackgroundMusic();
+            } else {
+                button.textContent = '🔇 Musik: OFF';
+                button.style.background = '#666';
+                stopBackgroundMusic();
+            }
+        }
+
+        function startBackgroundMusic() {
+            if (!musicEnabled) return;
+            
+            try {
+                if (!audioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                
+                // Play cheerful background melody
+                playMelody();
+                
+                // Repeat melody every 8 seconds
+                musicInterval = setInterval(playMelody, 8000);
+            } catch (e) {
+                console.log('Audio not supported');
+            }
+        }
+
+        function stopBackgroundMusic() {
+            if (musicInterval) {
+                clearInterval(musicInterval);
+                musicInterval = null;
+            }
+        }
+
+        function playMelody() {
+            if (!audioContext || !musicEnabled) return;
+            
+            const notes = [
+                { freq: 523.25, time: 0.0, duration: 0.3 }, // C5
+                { freq: 587.33, time: 0.4, duration: 0.3 }, // D5
+                { freq: 659.25, time: 0.8, duration: 0.3 }, // E5
+                { freq: 698.46, time: 1.2, duration: 0.3 }, // F5
+                { freq: 783.99, time: 1.6, duration: 0.6 }, // G5
+                { freq: 659.25, time: 2.4, duration: 0.3 }, // E5
+                { freq: 523.25, time: 2.8, duration: 0.6 }  // C5
+            ];
+            
+            notes.forEach(note => {
+                setTimeout(() => {
+                    if (musicEnabled) playNote(note.freq, note.duration);
+                }, note.time * 1000);
+            });
+        }
+
+        function playNote(frequency, duration) {
+            if (!audioContext || !musicEnabled) return;
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+
+        // Initialize progress and music
+        updateProgress();
+        
+        // Start music after user interaction
+        document.addEventListener('click', function() {
+            if (musicEnabled && !musicInterval) {
+                startBackgroundMusic();
+            }
+        }, { once: true });
+
+        // Add keyboard controls for demo
+        document.addEventListener('keydown', function(event) {
+            if (currentTab === 'intro') {
+                switch(event.key) {
+                    case 'ArrowLeft':
+                        moveSprite('left');
+                        break;
+                    case 'ArrowRight':
+                        moveSprite('right');
+                        break;
+                    case 'ArrowUp':
+                        moveSprite('up');
+                        break;
+                    case 'ArrowDown':
+                        moveSprite('down');
+                        break;
+                    case ' ':
+                        changeSprite();
+                        event.preventDefault();
+                        break;
+                }
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9852f794922db5d8',t:'MTc1ODg5MTg2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
