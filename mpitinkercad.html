@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Pembelajaran Tinkercad Interaktif</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .bounce {
+            animation: bounce 0.6s ease-in-out;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans">
+    <!-- Background Music Controls -->
+    <div id="music-controls" class="fixed top-4 right-4 z-50 bg-white rounded-lg shadow-lg p-3 border">
+        <div class="flex items-center space-x-3">
+            <button id="music-toggle" onclick="toggleMusic()" class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full flex items-center justify-center hover:from-purple-600 hover:to-pink-600 transition-all">
+                <span id="music-icon">🎵</span>
+            </button>
+            <div class="flex flex-col">
+                <span class="text-xs font-medium text-gray-700">Musik Belajar</span>
+                <input type="range" id="volume-slider" min="0" max="100" value="30" class="w-20 h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <!-- School and Creator Info -->
+            <div class="text-center mb-4 pb-4 border-b border-gray-200">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">SMAN 1 BOGOR</h1>
+                <div class="flex items-center justify-center space-x-2 text-gray-600">
+                    <span class="text-sm">Modul Pembelajaran Tinkercad Interaktif</span>
+                    <span class="text-gray-400">•</span>
+                    <span class="text-sm">Dibuat oleh: <span class="font-semibold text-blue-600">Erwan Setiawan</span></span>
+                </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">🔧</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-800">Pembelajaran Interaktif</h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="bg-green-100 px-3 py-1 rounded-full">
+                        <span class="text-green-800 text-sm font-medium">Progress: <span id="overall-progress">0%</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b sticky top-0 z-40">
+        <div class="container mx-auto px-6">
+            <div class="flex space-x-8 overflow-x-auto">
+                <button onclick="showSection('intro')" class="nav-btn py-4 px-2 border-b-2 border-transparent hover:border-blue-500 transition-colors whitespace-nowrap">
+                    📚 Pengenalan
+                </button>
+                <button onclick="showSection('basics')" class="nav-btn py-4 px-2 border-b-2 border-transparent hover:border-blue-500 transition-colors whitespace-nowrap">
+                    🎯 Dasar-dasar
+                </button>
+                <button onclick="showSection('tools')" class="nav-btn py-4 px-2 border-b-2 border-transparent hover:border-blue-500 transition-colors whitespace-nowrap">
+                    🛠️ Tools & Fitur
+                </button>
+                <button onclick="showSection('projects')" class="nav-btn py-4 px-2 border-b-2 border-transparent hover:border-blue-500 transition-colors whitespace-nowrap">
+                    🚀 Proyek Praktis
+                </button>
+                <button onclick="showSection('quiz')" class="nav-btn py-4 px-2 border-b-2 border-transparent hover:border-blue-500 transition-colors whitespace-nowrap">
+                    🧠 Kuis Interaktif
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Section: Pengenalan -->
+        <section id="intro" class="section fade-in">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="text-center mb-8">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-4">Selamat Datang di Dunia Tinkercad! 🎉</h2>
+                    <p class="text-xl text-gray-600">Mari jelajahi platform desain 3D yang mengubah ide menjadi kenyataan</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Apa itu Tinkercad?</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <span class="text-2xl">🌐</span>
+                                <div>
+                                    <h4 class="font-semibold text-gray-700">Platform Online Gratis</h4>
+                                    <p class="text-gray-600">Tidak perlu install software, cukup buka browser!</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="text-2xl">🎨</span>
+                                <div>
+                                    <h4 class="font-semibold text-gray-700">Desain 3D Mudah</h4>
+                                    <p class="text-gray-600">Interface drag-and-drop yang user-friendly</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="text-2xl">🔌</span>
+                                <div>
+                                    <h4 class="font-semibold text-gray-700">Simulasi Elektronik</h4>
+                                    <p class="text-gray-600">Buat rangkaian Arduino dan simulasikan</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg p-6">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">Mengapa Belajar Tinkercad?</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center space-x-2">
+                                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                <span class="text-gray-700">Mengembangkan kreativitas dan imajinasi</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                <span class="text-gray-700">Memahami konsep desain 3D</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                <span class="text-gray-700">Persiapan untuk teknologi masa depan</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                <span class="text-gray-700">Belajar elektronik dan programming</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <button onclick="completeSection('intro')" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105">
+                        Saya Siap Belajar! 🚀
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Dasar-dasar -->
+        <section id="basics" class="section hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Dasar-dasar Tinkercad 🎯</h2>
+                
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="card-hover bg-gradient-to-br from-red-50 to-red-100 p-6 rounded-lg border border-red-200">
+                        <div class="text-center mb-4">
+                            <span class="text-4xl">🎨</span>
+                            <h3 class="text-xl font-semibold text-gray-800 mt-2">3D Design</h3>
+                        </div>
+                        <p class="text-gray-600 text-center">Buat model 3D dengan shapes dasar seperti kubus, silinder, dan bola</p>
+                    </div>
+                    
+                    <div class="card-hover bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border border-green-200">
+                        <div class="text-center mb-4">
+                            <span class="text-4xl">⚡</span>
+                            <h3 class="text-xl font-semibold text-gray-800 mt-2">Circuits</h3>
+                        </div>
+                        <p class="text-gray-600 text-center">Desain rangkaian elektronik dan simulasi Arduino</p>
+                    </div>
+                    
+                    <div class="card-hover bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200">
+                        <div class="text-center mb-4">
+                            <span class="text-4xl">💻</span>
+                            <h3 class="text-xl font-semibold text-gray-800 mt-2">Codeblocks</h3>
+                        </div>
+                        <p class="text-gray-600 text-center">Programming visual dengan drag-and-drop blocks</p>
+                    </div>
+                </div>
+                
+                <!-- Interactive Demo -->
+                <div class="bg-gray-50 rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Demo Interaktif: Membuat Kubus 📦</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-3">Langkah-langkah:</h4>
+                            <ol class="space-y-2">
+                                <li class="flex items-center space-x-2">
+                                    <span class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                                    <span class="text-gray-700">Pilih shape "Box" dari panel kanan</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <span class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                                    <span class="text-gray-700">Drag ke workspace (area kerja)</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <span class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                                    <span class="text-gray-700">Klik objek untuk mengedit ukuran</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <span class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                                    <span class="text-gray-700">Ubah warna di panel Inspector</span>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 border-2 border-dashed border-gray-300">
+                            <div class="text-center">
+                                <div id="demo-cube" class="w-24 h-24 bg-blue-500 mx-auto rounded-lg shadow-lg transform transition-all duration-300 hover:rotate-12 hover:scale-110 cursor-pointer" onclick="animateCube()"></div>
+                                <p class="text-gray-600 mt-2">Klik kubus untuk animasi!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button onclick="completeSection('basics')" class="bg-gradient-to-r from-green-500 to-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-green-600 hover:to-blue-600 transition-all">
+                        Saya Paham Dasar-dasarnya! ✅
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Tools & Fitur -->
+        <section id="tools" class="section hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Tools & Fitur Tinkercad 🛠️</h2>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <div class="tool-card bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-lg border border-purple-200 cursor-pointer" onclick="showToolDetail('move')">
+                        <div class="text-center">
+                            <span class="text-3xl">↔️</span>
+                            <h4 class="font-semibold text-gray-800 mt-2">Move</h4>
+                            <p class="text-sm text-gray-600">Memindahkan objek</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-card bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200 cursor-pointer" onclick="showToolDetail('rotate')">
+                        <div class="text-center">
+                            <span class="text-3xl">🔄</span>
+                            <h4 class="font-semibold text-gray-800 mt-2">Rotate</h4>
+                            <p class="text-sm text-gray-600">Memutar objek</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-card bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border border-green-200 cursor-pointer" onclick="showToolDetail('scale')">
+                        <div class="text-center">
+                            <span class="text-3xl">📏</span>
+                            <h4 class="font-semibold text-gray-800 mt-2">Scale</h4>
+                            <p class="text-sm text-gray-600">Mengubah ukuran</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-card bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg border border-red-200 cursor-pointer" onclick="showToolDetail('group')">
+                        <div class="text-center">
+                            <span class="text-3xl">🔗</span>
+                            <h4 class="font-semibold text-gray-800 mt-2">Group</h4>
+                            <p class="text-sm text-gray-600">Menggabungkan objek</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tool Detail Panel -->
+                <div id="tool-detail" class="bg-gray-50 rounded-lg p-6 mb-6 hidden">
+                    <div id="tool-content"></div>
+                </div>
+                
+                <!-- Aplikasi dalam Kehidupan -->
+                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">💡 Aplikasi Tinkercad dalam Kehidupan Sehari-hari</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-3">🏠 Di Rumah:</h4>
+                            <ul class="space-y-2 text-gray-600">
+                                <li>• Desain gantungan kunci custom</li>
+                                <li>• Buat tempat pensil unik</li>
+                                <li>• Rancang organizer meja</li>
+                                <li>• Prototype mainan sederhana</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-3">🎓 Di Sekolah:</h4>
+                            <ul class="space-y-2 text-gray-600">
+                                <li>• Visualisasi konsep matematika</li>
+                                <li>• Model molekul untuk kimia</li>
+                                <li>• Prototype proyek sains</li>
+                                <li>• Desain logo dan emblem</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button onclick="completeSection('tools')" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all">
+                        Siap Menggunakan Tools! 🔧
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Proyek Praktis -->
+        <section id="projects" class="section hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Proyek Praktis 🚀</h2>
+                
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="project-card card-hover bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
+                        <div class="text-center mb-4">
+                            <span class="text-4xl">🏠</span>
+                            <h3 class="text-lg font-semibold text-gray-800 mt-2">Rumah Mini</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Buat model rumah sederhana dengan atap, pintu, dan jendela</p>
+                        <div class="space-y-2 text-xs text-gray-500">
+                            <div>⏱️ Waktu: 30 menit</div>
+                            <div>📊 Level: Pemula</div>
+                        </div>
+                        <button onclick="startProject('house')" class="w-full mt-4 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                            Mulai Proyek
+                        </button>
+                    </div>
+                    
+                    <div class="project-card card-hover bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200">
+                        <div class="text-center mb-4">
+                            <span class="text-4xl">🚗</span>
+                            <h3 class="text-lg font-semibold text-gray-800 mt-2">Mobil Sederhana</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Desain mobil dengan roda yang bisa berputar</p>
+                        <div class="space-y-2 text-xs text-gray-500">
+                            <div>⏱️ Waktu: 45 menit</div>
+                            <div>📊 Level: Menengah</div>
+                        </div>
+                        <button onclick="startProject('car')" class="w-full mt-4 bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors">
+                            Mulai Proyek
+                        </button>
+                    </div>
+                    
+                    <div class="project-card card-hover bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 border border-purple-200">
+                        <div class="text-center mb-4">
+                            <span class="text-4xl">💡</span>
+                            <h3 class="text-lg font-semibold text-gray-800 mt-2">LED Blink</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Rangkaian LED berkedip dengan Arduino</p>
+                        <div class="space-y-2 text-xs text-gray-500">
+                            <div>⏱️ Waktu: 20 menit</div>
+                            <div>📊 Level: Pemula</div>
+                        </div>
+                        <button onclick="startProject('led')" class="w-full mt-4 bg-purple-500 text-white py-2 rounded-lg hover:bg-purple-600 transition-colors">
+                            Mulai Proyek
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Project Detail Panel -->
+                <div id="project-detail" class="bg-gray-50 rounded-lg p-6 mb-6 hidden">
+                    <div id="project-content"></div>
+                </div>
+                
+                <div class="text-center">
+                    <button onclick="completeSection('projects')" class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-red-600 transition-all">
+                        Selesai Berlatih! 🎯
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Kuis -->
+        <section id="quiz" class="section hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Kuis & Permainan Interaktif 🧠🎮</h2>
+                
+                <!-- Mode Selection -->
+                <div id="mode-selection" class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Pilih Mode Pembelajaran:</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="card-hover bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200 cursor-pointer" onclick="startQuizMode()">
+                            <div class="text-center">
+                                <span class="text-4xl">📝</span>
+                                <h4 class="text-lg font-semibold text-gray-800 mt-2">Kuis Pilihan Ganda</h4>
+                                <p class="text-gray-600 text-sm mt-2">20 soal dengan 5 pilihan jawaban</p>
+                                <div class="mt-3 text-xs text-gray-500">
+                                    <div>📊 Total Poin: 350</div>
+                                    <div>⏱️ Waktu: Tidak terbatas</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-hover bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg border border-purple-200 cursor-pointer" onclick="startGameMode()">
+                            <div class="text-center">
+                                <span class="text-4xl">🎮</span>
+                                <h4 class="text-lg font-semibold text-gray-800 mt-2">Mode Permainan</h4>
+                                <p class="text-gray-600 text-sm mt-2">Drag & drop, urutan, dan matching</p>
+                                <div class="mt-3 text-xs text-gray-500">
+                                    <div>📊 Total Poin: 225</div>
+                                    <div>⏱️ Waktu: Ada batas waktu</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quiz Mode -->
+                <div id="quiz-container" class="hidden">
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-lg font-semibold text-gray-700">Pertanyaan <span id="current-question">1</span> dari <span id="total-questions">20</span></span>
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-yellow-100 px-3 py-1 rounded-full">
+                                    <span class="text-yellow-800 text-sm font-medium">Poin: <span id="current-points">0</span></span>
+                                </div>
+                                <div class="bg-gray-200 rounded-full h-2 w-32">
+                                    <div id="quiz-progress" class="progress-bar bg-blue-500 h-2 rounded-full" style="width: 5%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="question-container" class="mb-8">
+                        <!-- Questions will be loaded here -->
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button id="prev-btn" onclick="previousQuestion()" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors" disabled>
+                            ← Sebelumnya
+                        </button>
+                        <button id="next-btn" onclick="nextQuestion()" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                            Selanjutnya →
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Game Mode -->
+                <div id="game-container" class="hidden">
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-lg font-semibold text-gray-700">Permainan <span id="current-game">1</span> dari <span id="total-games">3</span></span>
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-green-100 px-3 py-1 rounded-full">
+                                    <span class="text-green-800 text-sm font-medium">Poin: <span id="game-points">0</span></span>
+                                </div>
+                                <div class="bg-red-100 px-3 py-1 rounded-full">
+                                    <span class="text-red-800 text-sm font-medium">Waktu: <span id="game-timer">60</span>s</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="game-content" class="mb-8">
+                        <!-- Game content will be loaded here -->
+                    </div>
+                    
+                    <div class="text-center">
+                        <button id="game-next-btn" onclick="nextGame()" class="bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 transition-colors hidden">
+                            Permainan Selanjutnya →
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Results -->
+                <div id="quiz-result" class="hidden text-center">
+                    <div class="mb-6">
+                        <span id="result-emoji" class="text-6xl">🎉</span>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-4">Hasil Pembelajaran</h3>
+                        <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6 mt-4">
+                            <div class="grid md:grid-cols-3 gap-4 text-center">
+                                <div>
+                                    <div class="text-2xl font-bold text-blue-600" id="final-score">0</div>
+                                    <div class="text-sm text-gray-600">Total Poin</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-green-600" id="correct-answers">0</div>
+                                    <div class="text-sm text-gray-600">Jawaban Benar</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-purple-600" id="accuracy-rate">0%</div>
+                                    <div class="text-sm text-gray-600">Tingkat Akurasi</div>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="text-lg font-semibold text-gray-800" id="grade-text">Excellent!</div>
+                                <div class="text-sm text-gray-600" id="grade-description">Pemahaman Anda tentang Tinkercad sangat baik!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-x-4">
+                        <button onclick="restartQuiz()" class="bg-gradient-to-r from-green-500 to-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-green-600 hover:to-blue-600 transition-all">
+                            Ulangi Kuis 🔄
+                        </button>
+                        <button onclick="backToModeSelection()" class="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-gray-600 hover:to-gray-700 transition-all">
+                            Pilih Mode Lain 🎯
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-300">© 2024 Modul Pembelajaran Tinkercad - Dibuat dengan ❤️ untuk siswa SMA</p>
+            <p class="text-gray-400 mt-2">Mulai berkreasi dengan Tinkercad hari ini!</p>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let currentSection = 'intro';
+        let completedSections = [];
+        let currentQuestionIndex = 0;
+        let quizAnswers = [];
+        let quizScore = 0;
+        let currentMode = 'selection'; // 'selection', 'quiz', 'game'
+        let currentGameIndex = 0;
+        let gameScore = 0;
+        let gameTimer = 60;
+        let gameInterval = null;
+        let totalCorrectAnswers = 0;
+
+        // Quiz questions (20 soal)
+        const quizQuestions = [
+            {
+                question: "Apa fungsi utama Tinkercad?",
+                options: [
+                    "Editing video dan audio",
+                    "Desain 3D dan simulasi elektronik",
+                    "Membuat presentasi PowerPoint",
+                    "Editing foto dan gambar",
+                    "Browsing internet"
+                ],
+                correct: 1,
+                points: 5
+            },
+            {
+                question: "Tool mana yang digunakan untuk memutar objek di Tinkercad?",
+                options: [
+                    "Move Tool",
+                    "Scale Tool", 
+                    "Rotate Tool",
+                    "Group Tool",
+                    "Delete Tool"
+                ],
+                correct: 2,
+                points: 5
+            },
+            {
+                question: "Apa keuntungan utama Tinkercad dibanding software 3D lainnya?",
+                options: [
+                    "Gratis dan berbasis web browser",
+                    "Fitur yang sangat kompleks dan sulit",
+                    "Hanya untuk desainer profesional",
+                    "Memerlukan komputer dengan spek tinggi",
+                    "Berbayar dan eksklusif"
+                ],
+                correct: 0,
+                points: 5
+            },
+            {
+                question: "Dalam kehidupan sehari-hari, Tinkercad dapat digunakan untuk:",
+                options: [
+                    "Hanya untuk mengerjakan tugas sekolah",
+                    "Membuat prototype dan desain custom",
+                    "Bermain game online",
+                    "Menonton video YouTube",
+                    "Chatting dengan teman"
+                ],
+                correct: 1,
+                points: 5
+            },
+            {
+                question: "Fitur Circuits di Tinkercad berguna untuk:",
+                options: [
+                    "Menggambar rangkaian listrik rumah",
+                    "Simulasi Arduino dan komponen elektronik",
+                    "Membuat animasi 3D",
+                    "Editing file audio",
+                    "Membuat website"
+                ],
+                correct: 1,
+                points: 5
+            },
+            {
+                question: "Shape dasar apa yang paling cocok untuk membuat roda mobil?",
+                options: [
+                    "Box (Kubus)",
+                    "Cylinder (Silinder)",
+                    "Sphere (Bola)",
+                    "Cone (Kerucut)",
+                    "Wedge (Baji)"
+                ],
+                correct: 1,
+                points: 10
+            },
+            {
+                question: "Bagaimana cara membuat lubang pada objek di Tinkercad?",
+                options: [
+                    "Menggunakan Delete Tool",
+                    "Mengubah objek menjadi 'Hole' lalu Group",
+                    "Menggunakan Cut Tool",
+                    "Menggunakan Subtract Tool",
+                    "Tidak bisa membuat lubang"
+                ],
+                correct: 1,
+                points: 10
+            },
+            {
+                question: "Apa yang dimaksud dengan 'Workplane' di Tinkercad?",
+                options: [
+                    "Area untuk menyimpan file",
+                    "Bidang kerja tempat menempatkan objek",
+                    "Menu pengaturan aplikasi",
+                    "Folder untuk menyimpan proyek",
+                    "Tool untuk mengedit objek"
+                ],
+                correct: 1,
+                points: 10
+            },
+            {
+                question: "Shortcut keyboard untuk menduplikasi objek di Tinkercad adalah:",
+                options: [
+                    "Ctrl + C, Ctrl + V",
+                    "Ctrl + D",
+                    "Ctrl + X",
+                    "Ctrl + Z",
+                    "Ctrl + S"
+                ],
+                correct: 1,
+                points: 15
+            },
+            {
+                question: "Komponen elektronik mana yang digunakan untuk mengontrol kecerahan LED?",
+                options: [
+                    "Resistor",
+                    "Capacitor",
+                    "Potentiometer",
+                    "Transistor",
+                    "Dioda"
+                ],
+                correct: 2,
+                points: 15
+            },
+            {
+                question: "Dalam Arduino, pin mana yang biasanya digunakan untuk LED built-in?",
+                options: [
+                    "Pin 12",
+                    "Pin 13",
+                    "Pin 14",
+                    "Pin A0",
+                    "Pin GND"
+                ],
+                correct: 1,
+                points: 15
+            },
+            {
+                question: "Apa fungsi dari resistor dalam rangkaian LED?",
+                options: [
+                    "Memperkuat sinyal",
+                    "Menyimpan energi",
+                    "Membatasi arus listrik",
+                    "Mengubah tegangan",
+                    "Mempercepat aliran listrik"
+                ],
+                correct: 2,
+                points: 20
+            },
+            {
+                question: "Format file apa yang dapat diekspor dari Tinkercad untuk 3D printing?",
+                options: [
+                    ".JPG",
+                    ".STL",
+                    ".MP4",
+                    ".PDF",
+                    ".TXT"
+                ],
+                correct: 1,
+                points: 20
+            },
+            {
+                question: "Berapa maksimal objek yang dapat ditempatkan dalam satu desain Tinkercad?",
+                options: [
+                    "50 objek",
+                    "100 objek",
+                    "200 objek",
+                    "500 objek",
+                    "Tidak terbatas"
+                ],
+                correct: 3,
+                points: 20
+            },
+            {
+                question: "Apa yang terjadi jika dua objek solid di-Group bersama?",
+                options: [
+                    "Objek akan hilang",
+                    "Objek akan bergabung menjadi satu",
+                    "Objek akan berubah warna",
+                    "Objek akan mengecil",
+                    "Tidak ada perubahan"
+                ],
+                correct: 1,
+                points: 25
+            },
+            {
+                question: "Dalam pemrograman Arduino, apa fungsi dari 'delay(1000)'?",
+                options: [
+                    "Menghentikan program",
+                    "Menunggu selama 1000 milidetik",
+                    "Mengulang program 1000 kali",
+                    "Mengatur kecepatan processor",
+                    "Menyimpan data ke memori"
+                ],
+                correct: 1,
+                points: 25
+            },
+            {
+                question: "Sensor apa yang dapat digunakan untuk mendeteksi jarak dalam Tinkercad?",
+                options: [
+                    "LDR (Light Dependent Resistor)",
+                    "Ultrasonic Sensor",
+                    "Temperature Sensor",
+                    "Accelerometer",
+                    "Gyroscope"
+                ],
+                correct: 1,
+                points: 25
+            },
+            {
+                question: "Apa kegunaan dari 'Align Tool' di Tinkercad?",
+                options: [
+                    "Mengubah ukuran objek",
+                    "Memutar objek",
+                    "Menyelaraskan posisi objek",
+                    "Mengubah warna objek",
+                    "Menghapus objek"
+                ],
+                correct: 2,
+                points: 30
+            },
+            {
+                question: "Dalam rangkaian Arduino, apa fungsi dari 'pull-up resistor'?",
+                options: [
+                    "Menurunkan tegangan",
+                    "Menstabilkan sinyal input",
+                    "Memperkuat arus",
+                    "Menyaring noise",
+                    "Mengubah frekuensi"
+                ],
+                correct: 1,
+                points: 30
+            },
+            {
+                question: "Apa yang dimaksud dengan 'parametric design' dalam konteks Tinkercad?",
+                options: [
+                    "Desain yang tidak bisa diubah",
+                    "Desain dengan parameter yang dapat disesuaikan",
+                    "Desain yang menggunakan banyak warna",
+                    "Desain yang sangat kompleks",
+                    "Desain yang menggunakan kode programming"
+                ],
+                correct: 1,
+                points: 30
+            }
+        ];
+
+        // Game questions untuk mode permainan
+        const gameQuestions = [
+            {
+                type: "drag-drop",
+                question: "Drag tools ke fungsi yang tepat!",
+                items: [
+                    { id: "move", text: "Move Tool", correct: "memindahkan" },
+                    { id: "rotate", text: "Rotate Tool", correct: "memutar" },
+                    { id: "scale", text: "Scale Tool", correct: "mengubah-ukuran" }
+                ],
+                targets: [
+                    { id: "memindahkan", text: "Memindahkan Objek" },
+                    { id: "memutar", text: "Memutar Objek" },
+                    { id: "mengubah-ukuran", text: "Mengubah Ukuran" }
+                ],
+                points: 50
+            },
+            {
+                type: "sequence",
+                question: "Urutkan langkah membuat rumah 3D yang benar!",
+                steps: [
+                    { id: 1, text: "Buat base dengan Box", order: 1 },
+                    { id: 2, text: "Tambahkan atap dengan Wedge", order: 2 },
+                    { id: 3, text: "Buat pintu dengan Hole", order: 3 },
+                    { id: 4, text: "Group semua objek", order: 4 }
+                ],
+                points: 75
+            },
+            {
+                type: "matching",
+                question: "Cocokkan komponen dengan fungsinya!",
+                pairs: [
+                    { component: "LED", function: "Memancarkan cahaya" },
+                    { component: "Resistor", function: "Membatasi arus" },
+                    { component: "Arduino", function: "Mikrokontroler" },
+                    { component: "Breadboard", function: "Tempat rangkaian" }
+                ],
+                points: 100
+            }
+        ];
+
+        // Music functionality
+        let audioContext = null;
+        let musicPlaying = false;
+        let currentVolume = 0.3;
+        
+        function createBackgroundMusic() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Create a simple uplifting melody using Web Audio API
+                const playNote = (frequency, startTime, duration) => {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(frequency, startTime);
+                    oscillator.type = 'sine';
+                    
+                    gainNode.gain.setValueAtTime(0, startTime);
+                    gainNode.gain.linearRampToValueAtTime(currentVolume * 0.1, startTime + 0.1);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+                    
+                    oscillator.start(startTime);
+                    oscillator.stop(startTime + duration);
+                };
+                
+                // Simple uplifting melody pattern
+                const melody = [
+                    {note: 523.25, duration: 0.5}, // C5
+                    {note: 587.33, duration: 0.5}, // D5
+                    {note: 659.25, duration: 0.5}, // E5
+                    {note: 698.46, duration: 0.5}, // F5
+                    {note: 783.99, duration: 1.0}, // G5
+                    {note: 659.25, duration: 0.5}, // E5
+                    {note: 698.46, duration: 0.5}, // F5
+                    {note: 783.99, duration: 1.0}, // G5
+                ];
+                
+                const playMelody = () => {
+                    if (!musicPlaying) return;
+                    
+                    let currentTime = audioContext.currentTime;
+                    melody.forEach((note, index) => {
+                        playNote(note.note, currentTime, note.duration);
+                        currentTime += note.duration;
+                    });
+                    
+                    // Repeat melody every 4 seconds
+                    setTimeout(playMelody, 4000);
+                };
+                
+                playMelody();
+                
+            } catch (error) {
+                console.log('Web Audio API not supported, using alternative approach');
+                // Fallback: Show encouraging messages instead of music
+                showEncouragingMessages();
+            }
+        }
+        
+        function showEncouragingMessages() {
+            const messages = [
+                "🎯 Tetap semangat belajar!",
+                "🚀 Kamu bisa melakukannya!",
+                "⭐ Setiap langkah adalah kemajuan!",
+                "💪 Terus berlatih dan berkembang!",
+                "🎨 Kreativitasmu tidak terbatas!"
+            ];
+            
+            let messageIndex = 0;
+            const showMessage = () => {
+                if (!musicPlaying) return;
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'fixed top-20 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-lg shadow-lg z-40 animate-bounce';
+                messageDiv.textContent = messages[messageIndex];
+                document.body.appendChild(messageDiv);
+                
+                setTimeout(() => {
+                    messageDiv.remove();
+                }, 3000);
+                
+                messageIndex = (messageIndex + 1) % messages.length;
+                setTimeout(showMessage, 8000);
+            };
+            
+            showMessage();
+        }
+        
+        function toggleMusic() {
+            const musicIcon = document.getElementById('music-icon');
+            const musicToggle = document.getElementById('music-toggle');
+            
+            if (!musicPlaying) {
+                musicPlaying = true;
+                musicIcon.textContent = '🎵';
+                musicToggle.classList.remove('from-purple-500', 'to-pink-500');
+                musicToggle.classList.add('from-green-500', 'to-blue-500');
+                createBackgroundMusic();
+                
+                // Show start message
+                const startMessage = document.createElement('div');
+                startMessage.className = 'fixed top-20 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-40';
+                startMessage.textContent = '🎵 Musik penyemangat dimulai!';
+                document.body.appendChild(startMessage);
+                setTimeout(() => startMessage.remove(), 2000);
+                
+            } else {
+                musicPlaying = false;
+                musicIcon.textContent = '🔇';
+                musicToggle.classList.remove('from-green-500', 'to-blue-500');
+                musicToggle.classList.add('from-gray-500', 'to-gray-600');
+                
+                if (audioContext) {
+                    audioContext.close();
+                    audioContext = null;
+                }
+            }
+        }
+        
+        function updateVolume() {
+            const volumeSlider = document.getElementById('volume-slider');
+            currentVolume = volumeSlider.value / 100;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('intro');
+            updateProgress();
+            loadQuestion();
+            
+            // Setup volume control
+            document.getElementById('volume-slider').addEventListener('input', updateVolume);
+            
+            // Auto-start music after 2 seconds
+            setTimeout(() => {
+                if (!musicPlaying) {
+                    toggleMusic();
+                }
+            }, 2000);
+        });
+
+        // Navigation functions
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.remove('hidden');
+            document.getElementById(sectionId).classList.add('fade-in');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('border-blue-500', 'text-blue-600');
+            });
+            
+            event.target.classList.add('border-blue-500', 'text-blue-600');
+            currentSection = sectionId;
+        }
+
+        function completeSection(sectionId) {
+            if (!completedSections.includes(sectionId)) {
+                completedSections.push(sectionId);
+                updateProgress();
+                
+                // Show success animation
+                const button = event.target;
+                button.classList.add('bounce');
+                button.innerHTML = '✅ Selesai!';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    button.classList.remove('bounce');
+                }, 600);
+            }
+        }
+
+        function updateProgress() {
+            const totalSections = 4; // intro, basics, tools, projects
+            const progress = (completedSections.length / totalSections) * 100;
+            document.getElementById('overall-progress').textContent = Math.round(progress) + '%';
+        }
+
+        // Animation functions
+        function animateCube() {
+            const cube = document.getElementById('demo-cube');
+            cube.classList.add('bounce');
+            
+            // Change color randomly
+            const colors = ['bg-blue-500', 'bg-red-500', 'bg-green-500', 'bg-purple-500', 'bg-yellow-500'];
+            const currentColor = cube.className.match(/bg-\w+-\d+/)[0];
+            cube.classList.remove(currentColor);
+            
+            const newColor = colors[Math.floor(Math.random() * colors.length)];
+            cube.classList.add(newColor);
+            
+            setTimeout(() => {
+                cube.classList.remove('bounce');
+            }, 600);
+        }
+
+        // Tool detail functions
+        function showToolDetail(toolName) {
+            const toolDetail = document.getElementById('tool-detail');
+            const toolContent = document.getElementById('tool-content');
+            
+            const toolInfo = {
+                move: {
+                    title: "Move Tool ↔️",
+                    description: "Tool untuk memindahkan objek di workspace",
+                    usage: [
+                        "Klik objek yang ingin dipindah",
+                        "Drag panah untuk memindah ke arah tertentu",
+                        "Gunakan grid untuk posisi yang presisi"
+                    ]
+                },
+                rotate: {
+                    title: "Rotate Tool 🔄", 
+                    description: "Tool untuk memutar objek dengan sudut tertentu",
+                    usage: [
+                        "Pilih objek yang ingin diputar",
+                        "Drag handle rotasi (panah melengkung)",
+                        "Tahan Shift untuk rotasi 45° increments"
+                    ]
+                },
+                scale: {
+                    title: "Scale Tool 📏",
+                    description: "Tool untuk mengubah ukuran objek",
+                    usage: [
+                        "Klik objek untuk melihat handle scale",
+                        "Drag corner untuk scale proporsional",
+                        "Drag sisi untuk scale satu dimensi"
+                    ]
+                },
+                group: {
+                    title: "Group Tool 🔗",
+                    description: "Tool untuk menggabungkan atau memisahkan objek",
+                    usage: [
+                        "Pilih multiple objek (Ctrl+click)",
+                        "Klik Group untuk menggabungkan",
+                        "Klik Ungroup untuk memisahkan"
+                    ]
+                }
+            };
+            
+            const info = toolInfo[toolName];
+            toolContent.innerHTML = `
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">${info.title}</h3>
+                <p class="text-gray-600 mb-4">${info.description}</p>
+                <h4 class="font-semibold text-gray-700 mb-2">Cara Penggunaan:</h4>
+                <ol class="space-y-2">
+                    ${info.usage.map((step, index) => `
+                        <li class="flex items-start space-x-2">
+                            <span class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">${index + 1}</span>
+                            <span class="text-gray-700">${step}</span>
+                        </li>
+                    `).join('')}
+                </ol>
+            `;
+            
+            toolDetail.classList.remove('hidden');
+            toolDetail.classList.add('slide-in');
+        }
+
+        // Project functions
+        function startProject(projectName) {
+            const projectDetail = document.getElementById('project-detail');
+            const projectContent = document.getElementById('project-content');
+            
+            const projects = {
+                house: {
+                    title: "🏠 Proyek Rumah Mini",
+                    steps: [
+                        "Buat base rumah dengan Box (20x15x10)",
+                        "Tambahkan atap dengan Wedge di atas base",
+                        "Buat pintu dengan Box kecil dan ubah jadi Hole",
+                        "Tambahkan jendela dengan cara yang sama",
+                        "Gabungkan semua dengan Group"
+                    ]
+                },
+                car: {
+                    title: "🚗 Proyek Mobil Sederhana", 
+                    steps: [
+                        "Buat body mobil dengan Box (15x8x5)",
+                        "Tambahkan 4 roda dengan Cylinder",
+                        "Buat kaca depan dengan Box transparan",
+                        "Tambahkan detail seperti lampu dengan Sphere kecil",
+                        "Atur warna dan finishing"
+                    ]
+                },
+                led: {
+                    title: "💡 Proyek LED Blink",
+                    steps: [
+                        "Buka mode Circuits di Tinkercad",
+                        "Drag Arduino Uno ke workspace",
+                        "Tambahkan LED dan resistor 220Ω",
+                        "Hubungkan LED ke pin 13 Arduino",
+                        "Tulis code untuk blink dan simulasikan"
+                    ]
+                }
+            };
+            
+            const project = projects[projectName];
+            projectContent.innerHTML = `
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">${project.title}</h3>
+                <div class="bg-white rounded-lg p-4 mb-4">
+                    <h4 class="font-semibold text-gray-700 mb-3">Langkah-langkah:</h4>
+                    <ol class="space-y-3">
+                        ${project.steps.map((step, index) => `
+                            <li class="flex items-start space-x-3">
+                                <span class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">${index + 1}</span>
+                                <span class="text-gray-700 pt-1">${step}</span>
+                            </li>
+                        `).join('')}
+                    </ol>
+                </div>
+                <div class="text-center">
+                    <a href="https://www.tinkercad.com" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-green-600 hover:to-blue-600 transition-all inline-block">
+                        Buka Tinkercad 🚀
+                    </a>
+                </div>
+            `;
+            
+            projectDetail.classList.remove('hidden');
+            projectDetail.classList.add('slide-in');
+        }
+
+        // Mode selection functions
+        function startQuizMode() {
+            currentMode = 'quiz';
+            document.getElementById('mode-selection').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function startGameMode() {
+            currentMode = 'game';
+            currentGameIndex = 0;
+            gameScore = 0;
+            document.getElementById('mode-selection').classList.add('hidden');
+            document.getElementById('game-container').classList.remove('hidden');
+            loadGame();
+        }
+
+        function backToModeSelection() {
+            currentMode = 'selection';
+            document.getElementById('mode-selection').classList.remove('hidden');
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('game-container').classList.add('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+            
+            // Reset variables
+            currentQuestionIndex = 0;
+            currentGameIndex = 0;
+            quizAnswers = [];
+            quizScore = 0;
+            gameScore = 0;
+            totalCorrectAnswers = 0;
+        }
+
+        // Quiz functions
+        function loadQuestion() {
+            const question = quizQuestions[currentQuestionIndex];
+            const container = document.getElementById('question-container');
+            
+            container.innerHTML = `
+                <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold text-gray-800">${question.question}</h3>
+                        <div class="bg-yellow-200 px-3 py-1 rounded-full">
+                            <span class="text-yellow-800 text-sm font-bold">+${question.points} poin</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        ${question.options.map((option, index) => `
+                            <label class="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300 cursor-pointer transition-colors">
+                                <input type="radio" name="answer" value="${index}" class="text-blue-600">
+                                <span class="text-gray-700">${option}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Update progress
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('total-questions').textContent = quizQuestions.length;
+            
+            const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress').style.width = progress + '%';
+            
+            // Update buttons
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            document.getElementById('next-btn').textContent = currentQuestionIndex === quizQuestions.length - 1 ? 'Selesai' : 'Selanjutnya →';
+        }
+
+        function nextQuestion() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            
+            if (!selectedAnswer) {
+                alert('Pilih jawaban terlebih dahulu!');
+                return;
+            }
+            
+            // Save answer and calculate points
+            const answerIndex = parseInt(selectedAnswer.value);
+            quizAnswers[currentQuestionIndex] = answerIndex;
+            
+            if (answerIndex === quizQuestions[currentQuestionIndex].correct) {
+                quizScore += quizQuestions[currentQuestionIndex].points;
+                totalCorrectAnswers++;
+            }
+            
+            // Update current points display
+            document.getElementById('current-points').textContent = quizScore;
+            
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                // Remove points from previous answer if it was correct
+                if (quizAnswers[currentQuestionIndex] === quizQuestions[currentQuestionIndex].correct) {
+                    quizScore -= quizQuestions[currentQuestionIndex].points;
+                    totalCorrectAnswers--;
+                }
+                
+                currentQuestionIndex--;
+                loadQuestion();
+                
+                // Restore previous answer
+                if (quizAnswers[currentQuestionIndex] !== undefined) {
+                    const radio = document.querySelector(`input[name="answer"][value="${quizAnswers[currentQuestionIndex]}"]`);
+                    if (radio) radio.checked = true;
+                }
+                
+                // Update current points display
+                document.getElementById('current-points').textContent = quizScore;
+            }
+        }
+
+        // Game functions
+        function loadGame() {
+            const game = gameQuestions[currentGameIndex];
+            const container = document.getElementById('game-content');
+            
+            // Update game info
+            document.getElementById('current-game').textContent = currentGameIndex + 1;
+            document.getElementById('total-games').textContent = gameQuestions.length;
+            document.getElementById('game-points').textContent = gameScore;
+            
+            // Start timer
+            gameTimer = 60;
+            startGameTimer();
+            
+            if (game.type === 'drag-drop') {
+                loadDragDropGame(game, container);
+            } else if (game.type === 'sequence') {
+                loadSequenceGame(game, container);
+            } else if (game.type === 'matching') {
+                loadMatchingGame(game, container);
+            }
+        }
+
+        function loadDragDropGame(game, container) {
+            container.innerHTML = `
+                <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">${game.question}</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-3">Tools:</h4>
+                            <div class="space-y-2" id="drag-items">
+                                ${game.items.map(item => `
+                                    <div class="drag-item bg-blue-100 p-3 rounded-lg cursor-move border border-blue-200" 
+                                         draggable="true" data-id="${item.id}" data-correct="${item.correct}">
+                                        ${item.text}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-3">Fungsi:</h4>
+                            <div class="space-y-2" id="drop-targets">
+                                ${game.targets.map(target => `
+                                    <div class="drop-target bg-gray-100 p-3 rounded-lg border-2 border-dashed border-gray-300 min-h-[60px] flex items-center justify-center" 
+                                         data-id="${target.id}">
+                                        ${target.text}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <button onclick="checkDragDrop()" class="bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 transition-colors">
+                            Periksa Jawaban
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            setupDragDrop();
+        }
+
+        function loadSequenceGame(game, container) {
+            const shuffledSteps = [...game.steps].sort(() => Math.random() - 0.5);
+            
+            container.innerHTML = `
+                <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">${game.question}</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-3">Langkah-langkah (acak):</h4>
+                            <div class="space-y-2" id="sequence-items">
+                                ${shuffledSteps.map(step => `
+                                    <div class="sequence-item bg-yellow-100 p-3 rounded-lg cursor-move border border-yellow-200" 
+                                         draggable="true" data-id="${step.id}" data-order="${step.order}">
+                                        ${step.text}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-3">Urutan yang benar:</h4>
+                            <div class="space-y-2" id="sequence-targets">
+                                ${game.steps.map((_, index) => `
+                                    <div class="sequence-target bg-gray-100 p-3 rounded-lg border-2 border-dashed border-gray-300 min-h-[60px] flex items-center justify-center" 
+                                         data-position="${index + 1}">
+                                        ${index + 1}. Drop di sini
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <button onclick="checkSequence()" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors">
+                            Periksa Urutan
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            setupSequenceDragDrop();
+        }
+
+        function loadMatchingGame(game, container) {
+            const shuffledComponents = [...game.pairs.map(p => p.component)].sort(() => Math.random() - 0.5);
+            const shuffledFunctions = [...game.pairs.map(p => p.function)].sort(() => Math.random() - 0.5);
+            
+            container.innerHTML = `
+                <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">${game.question}</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-3">Komponen:</h4>
+                            <div class="space-y-2" id="matching-components">
+                                ${shuffledComponents.map((comp, index) => `
+                                    <div class="matching-item bg-orange-100 p-3 rounded-lg cursor-pointer border border-orange-200 hover:bg-orange-200 transition-colors" 
+                                         data-component="${comp}" onclick="selectMatchingItem(this, 'component')">
+                                        ${comp}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-3">Fungsi:</h4>
+                            <div class="space-y-2" id="matching-functions">
+                                ${shuffledFunctions.map((func, index) => `
+                                    <div class="matching-item bg-red-100 p-3 rounded-lg cursor-pointer border border-red-200 hover:bg-red-200 transition-colors" 
+                                         data-function="${func}" onclick="selectMatchingItem(this, 'function')">
+                                        ${func}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <h4 class="font-semibold text-gray-700 mb-3">Pasangan yang dipilih:</h4>
+                        <div id="selected-pairs" class="bg-white p-4 rounded-lg border border-gray-200 min-h-[100px]">
+                            <p class="text-gray-500 text-center">Klik komponen dan fungsi untuk membuat pasangan</p>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button onclick="checkMatching()" class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors">
+                                Periksa Pasangan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function startGameTimer() {
+            if (gameInterval) clearInterval(gameInterval);
+            
+            gameInterval = setInterval(() => {
+                gameTimer--;
+                document.getElementById('game-timer').textContent = gameTimer;
+                
+                if (gameTimer <= 0) {
+                    clearInterval(gameInterval);
+                    alert('Waktu habis! Lanjut ke permainan berikutnya.');
+                    nextGame();
+                }
+            }, 1000);
+        }
+
+        function nextGame() {
+            clearInterval(gameInterval);
+            
+            if (currentGameIndex < gameQuestions.length - 1) {
+                currentGameIndex++;
+                loadGame();
+            } else {
+                finishGame();
+            }
+        }
+
+        function finishQuiz() {
+            const totalPossiblePoints = quizQuestions.reduce((sum, q) => sum + q.points, 0);
+            const accuracy = Math.round((totalCorrectAnswers / quizQuestions.length) * 100);
+            
+            showResults(quizScore, totalCorrectAnswers, accuracy, totalPossiblePoints);
+        }
+
+        function finishGame() {
+            const totalPossiblePoints = gameQuestions.reduce((sum, g) => sum + g.points, 0);
+            const accuracy = Math.round((gameScore / totalPossiblePoints) * 100);
+            
+            showResults(gameScore, gameQuestions.length, accuracy, totalPossiblePoints);
+        }
+
+        function showResults(score, correct, accuracy, maxPoints) {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('game-container').classList.add('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+            
+            document.getElementById('final-score').textContent = score;
+            document.getElementById('correct-answers').textContent = correct;
+            document.getElementById('accuracy-rate').textContent = accuracy + '%';
+            
+            // Determine grade
+            let emoji, gradeText, gradeDescription;
+            if (accuracy >= 90) {
+                emoji = '🏆';
+                gradeText = 'Excellent!';
+                gradeDescription = 'Pemahaman Anda tentang Tinkercad sangat luar biasa!';
+            } else if (accuracy >= 80) {
+                emoji = '🎉';
+                gradeText = 'Very Good!';
+                gradeDescription = 'Anda memahami Tinkercad dengan sangat baik!';
+            } else if (accuracy >= 70) {
+                emoji = '👍';
+                gradeText = 'Good!';
+                gradeDescription = 'Pemahaman Anda tentang Tinkercad cukup baik!';
+            } else if (accuracy >= 60) {
+                emoji = '📚';
+                gradeText = 'Keep Learning!';
+                gradeDescription = 'Terus belajar untuk meningkatkan pemahaman Anda!';
+            } else {
+                emoji = '💪';
+                gradeText = 'Need More Practice!';
+                gradeDescription = 'Jangan menyerah! Latihan lebih banyak akan membantu!';
+            }
+            
+            document.getElementById('result-emoji').textContent = emoji;
+            document.getElementById('grade-text').textContent = gradeText;
+            document.getElementById('grade-description').textContent = gradeDescription;
+            
+            // Complete section if score is good
+            if (accuracy >= 70) {
+                completeSection('quiz');
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            quizAnswers = [];
+            quizScore = 0;
+            totalCorrectAnswers = 0;
+            
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('current-points').textContent = '0';
+            
+            loadQuestion();
+        }
+
+        // Drag and drop functionality
+        function setupDragDrop() {
+            const dragItems = document.querySelectorAll('.drag-item');
+            const dropTargets = document.querySelectorAll('.drop-target');
+            
+            dragItems.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', e.target.dataset.id);
+                    e.dataTransfer.setData('correct', e.target.dataset.correct);
+                });
+            });
+            
+            dropTargets.forEach(target => {
+                target.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    target.classList.add('bg-blue-50', 'border-blue-400');
+                });
+                
+                target.addEventListener('dragleave', (e) => {
+                    target.classList.remove('bg-blue-50', 'border-blue-400');
+                });
+                
+                target.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const draggedId = e.dataTransfer.getData('text/plain');
+                    const correctTarget = e.dataTransfer.getData('correct');
+                    
+                    if (target.dataset.id === correctTarget) {
+                        target.innerHTML = document.querySelector(`[data-id="${draggedId}"]`).textContent;
+                        target.classList.add('bg-green-100', 'border-green-400');
+                        target.dataset.filled = 'correct';
+                    } else {
+                        target.innerHTML = document.querySelector(`[data-id="${draggedId}"]`).textContent;
+                        target.classList.add('bg-red-100', 'border-red-400');
+                        target.dataset.filled = 'incorrect';
+                    }
+                    
+                    target.classList.remove('bg-blue-50', 'border-blue-400');
+                });
+            });
+        }
+
+        function setupSequenceDragDrop() {
+            const sequenceItems = document.querySelectorAll('.sequence-item');
+            const sequenceTargets = document.querySelectorAll('.sequence-target');
+            
+            sequenceItems.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', e.target.dataset.id);
+                    e.dataTransfer.setData('order', e.target.dataset.order);
+                    e.dataTransfer.setData('text-content', e.target.textContent);
+                });
+            });
+            
+            sequenceTargets.forEach(target => {
+                target.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    target.classList.add('bg-blue-50', 'border-blue-400');
+                });
+                
+                target.addEventListener('dragleave', (e) => {
+                    target.classList.remove('bg-blue-50', 'border-blue-400');
+                });
+                
+                target.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const order = e.dataTransfer.getData('order');
+                    const textContent = e.dataTransfer.getData('text-content');
+                    const position = target.dataset.position;
+                    
+                    target.innerHTML = textContent;
+                    target.dataset.order = order;
+                    target.classList.remove('bg-blue-50', 'border-blue-400');
+                    
+                    if (order === position) {
+                        target.classList.add('bg-green-100', 'border-green-400');
+                    } else {
+                        target.classList.add('bg-red-100', 'border-red-400');
+                    }
+                });
+            });
+        }
+
+        // Game checking functions
+        let selectedComponent = null;
+        let selectedFunction = null;
+        let matchingPairs = [];
+
+        function selectMatchingItem(element, type) {
+            // Remove previous selections
+            document.querySelectorAll('.matching-item').forEach(item => {
+                item.classList.remove('ring-2', 'ring-blue-500');
+            });
+            
+            if (type === 'component') {
+                selectedComponent = element.dataset.component;
+                element.classList.add('ring-2', 'ring-blue-500');
+            } else {
+                selectedFunction = element.dataset.function;
+                element.classList.add('ring-2', 'ring-blue-500');
+            }
+            
+            // If both selected, create pair
+            if (selectedComponent && selectedFunction) {
+                matchingPairs.push({
+                    component: selectedComponent,
+                    function: selectedFunction
+                });
+                
+                updateSelectedPairs();
+                
+                // Reset selections
+                selectedComponent = null;
+                selectedFunction = null;
+                document.querySelectorAll('.matching-item').forEach(item => {
+                    item.classList.remove('ring-2', 'ring-blue-500');
+                });
+            }
+        }
+
+        function updateSelectedPairs() {
+            const container = document.getElementById('selected-pairs');
+            if (matchingPairs.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center">Klik komponen dan fungsi untuk membuat pasangan</p>';
+            } else {
+                container.innerHTML = matchingPairs.map((pair, index) => `
+                    <div class="flex justify-between items-center p-2 bg-gray-50 rounded mb-2">
+                        <span>${pair.component} ↔ ${pair.function}</span>
+                        <button onclick="removePair(${index})" class="text-red-500 hover:text-red-700">✕</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function removePair(index) {
+            matchingPairs.splice(index, 1);
+            updateSelectedPairs();
+        }
+
+        function checkDragDrop() {
+            clearInterval(gameInterval);
+            const targets = document.querySelectorAll('.drop-target');
+            let correct = 0;
+            
+            targets.forEach(target => {
+                if (target.dataset.filled === 'correct') {
+                    correct++;
+                }
+            });
+            
+            if (correct === targets.length) {
+                gameScore += gameQuestions[currentGameIndex].points;
+                alert(`Benar semua! +${gameQuestions[currentGameIndex].points} poin`);
+            } else {
+                alert(`${correct}/${targets.length} benar. Coba lagi!`);
+            }
+            
+            document.getElementById('game-points').textContent = gameScore;
+            document.getElementById('game-next-btn').classList.remove('hidden');
+        }
+
+        function checkSequence() {
+            clearInterval(gameInterval);
+            const targets = document.querySelectorAll('.sequence-target');
+            let correct = 0;
+            
+            targets.forEach(target => {
+                if (target.dataset.order === target.dataset.position) {
+                    correct++;
+                }
+            });
+            
+            if (correct === targets.length) {
+                gameScore += gameQuestions[currentGameIndex].points;
+                alert(`Urutan benar! +${gameQuestions[currentGameIndex].points} poin`);
+            } else {
+                alert(`${correct}/${targets.length} urutan benar. Coba lagi!`);
+            }
+            
+            document.getElementById('game-points').textContent = gameScore;
+            document.getElementById('game-next-btn').classList.remove('hidden');
+        }
+
+        function checkMatching() {
+            clearInterval(gameInterval);
+            const correctPairs = gameQuestions[currentGameIndex].pairs;
+            let correct = 0;
+            
+            matchingPairs.forEach(pair => {
+                const isCorrect = correctPairs.some(cp => 
+                    cp.component === pair.component && cp.function === pair.function
+                );
+                if (isCorrect) correct++;
+            });
+            
+            if (correct === correctPairs.length && matchingPairs.length === correctPairs.length) {
+                gameScore += gameQuestions[currentGameIndex].points;
+                alert(`Semua pasangan benar! +${gameQuestions[currentGameIndex].points} poin`);
+            } else {
+                alert(`${correct}/${correctPairs.length} pasangan benar. Coba lagi!`);
+            }
+            
+            document.getElementById('game-points').textContent = gameScore;
+            document.getElementById('game-next-btn').classList.remove('hidden');
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9859ca0091a99509',t:'MTc1ODk2MzQwMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
